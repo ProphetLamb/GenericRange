@@ -24,6 +24,31 @@ namespace GenericRange
             Start = start;
             End = end;
         }
+        
+        /// <summary>
+        /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
+        /// </summary>
+        /// <param name="start">The start index.</param>
+        /// <param name="startFromEnd">Whether the start index is from the end.</param>
+        /// <param name="end">The end index.</param>
+        /// <param name="endFromEnd">Whether the end index is from the end.</param>
+        public Range(in T start, bool startFromEnd, in T end, bool endFromEnd)
+        {
+            Start = new Index<T>(start, startFromEnd);
+            End = new Index<T>(end, endFromEnd);
+        }
+
+        /// <summary>
+        /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
+        /// </summary>
+        /// <param name="start">The start index.</param>
+        /// <param name="end">The end index.</param>
+        /// <param name="endFromEnd">Whether the end index is from the end.</param>
+        public Range(in T start, in T end, bool endFromEnd)
+        {
+            Start = new Index<T>(start);
+            End = new Index<T>(end, endFromEnd);
+        }
 
         /// <summary>The inclusive start index of the <see cref="Range{T}"/>.</summary>
         public Index<T> Start { get; }
