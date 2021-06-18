@@ -5,17 +5,20 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <PackageVersion>0.0.1</PackageVersion>
     <Title>GenericRange</Title>
     <Authors>ProphetLamb</Authors>
     <Description>Generic implementation with a similar API as System.Range.</Description>
     <Copyright>Copyright (c) 2021 Prophet Lamb</Copyright>
     <PackageProjectUrl>https://github.com/ProphetLamb/GenericRange</PackageProjectUrl>
-    <PackageLicenseFile>..\LICENSE.lic</PackageLicenseFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/ProphetLamb/GenericRange</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <PackageTags>C#</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
