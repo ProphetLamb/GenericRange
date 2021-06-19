@@ -8,6 +8,7 @@ namespace GenericRange
     partial struct Index<T>
     {
         private static readonly Func<object, object, object> s_subtract = RangeHelper.GetGenericSubtractDelegate<T>();
+        private static readonly Comparer<T> s_comparer = Comparer<T>.Default;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static T Subtract(in T minuend, in T subtrahend) => s_subtract(minuend, subtrahend).Cast<T>();
