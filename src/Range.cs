@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace GenericRange
 {
@@ -16,6 +16,8 @@ namespace GenericRange
     public readonly struct Range<T> : IEquatable<Range<T>>
         where T : unmanaged, IComparable
     {
+#region Ctor
+
         /// <summary>Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.</summary>
         /// <param name="start">The start index.</param>
         /// <param name="end">The end index.</param>
@@ -50,12 +52,20 @@ namespace GenericRange
             End = new Index<T>(end, endFromEnd);
         }
 
+#endregion
+
+#region Properties
+
         /// <summary>The inclusive start index of the <see cref="Range{T}"/>.</summary>
         public Index<T> Start { get; }
         
         /// <summary>The end index of the <see cref="Range{T}"/>.</summary>
         public Index<T> End { get; }
-        
+
+#endregion
+
+#region Public members
+
         /// <summary>Indicates whether a specified value is within the range.</summary>
         /// <param name="value">The value to seek.</param>
         /// <param name="length">The value that represents the length of the collection that the range will be used with.</param>
@@ -117,9 +127,10 @@ namespace GenericRange
             return Start.Value.CompareTo(other.End.Value) <= 0 && End.Value.CompareTo(other.Start.Value) >= 0;
         }
         
-        /// <summary>Calculates the start offset and length of the <see cref="Range{T}"/> object using a collection length.</summary>
+        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a collection length.</summary>
         /// <param name="length">The value that represents the length of the collection that the range will be used with.</param>
         /// <returns>The start offset and length of the range.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (T Offset, T Length) GetOffsetAndLength(in T length)
         {
@@ -130,15 +141,76 @@ namespace GenericRange
             return (start, Index<T>.Subtract(end, start));
         }
         
-        /// <summary>Calculates the start offset and length of the <see cref="Range{T}"/> object using a collection length. Disallows indices from end in favour of performance.</summary>
+        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a collection length. Disallows indices from end in favour of performance.</summary>
         /// <returns>The start offset and length of the range.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (T Offset, T Length) GetOffsetAndLength()
         {
             Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            if (Start.Value.CompareTo(End.Value) > 0)
+            if (Start.CompareTo(End) > 0)
                 throw new ArgumentOutOfRangeException(nameof(Start), "Value less then " + nameof(End));
             return (Start.Value, Index<T>.Subtract(End.Value, Start.Value));
+        }
+
+        /// <summary>Returns the continuous union with an<paramref name="other"/> range in a set of a given <paramref name="length"/>.</summary>
+        /// <param name="other">The range to unify with.</param>
+        /// <param name="length">The length of the set.</param>
+        /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Range<T> Union(in Range<T> other, T length)
+        {
+            if (End.CompareTo(other.Start, length) < 0)
+                throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
+            return new Range<T>(Start.CompareTo(other.Start, length) < 0 ? other.Start : Start, End.CompareTo(other.End, length) < 0 ? other.End : End);
+        }
+        
+        /// <summary>Returns the continuous union with an<paramref name="other"/> range in an arbitrary set.</summary>
+        /// <param name="other">The range to unify with.</param>
+        /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Range<T> Union(in Range<T> other)
+        {
+            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
+            if (End.CompareTo(other.Start) < 0)
+                throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
+            return new Range<T>(Start.CompareTo(other.Start) < 0 ? other.Start : Start, End.CompareTo(other.End) < 0 ? other.End : End);
+        }
+
+        /// <summary>Returns the intersection with an<paramref name="other"/> range in a set of a given <paramref name="length"/>.</summary>
+        /// <param name="other">The range to unify with.</param>
+        /// <param name="length">The length of the set.</param>
+        /// <returns>The intersection between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><c>!this.Intersects(other, length)</c></exception>
+        [Pure]
+        public Range<T> Intersection(in Range<T> other, T length)
+        {
+            Index<T> start = Start.CompareTo(other.Start, length) < 0 ? Start : other.Start;
+            Index<T> end = End.CompareTo(other.End, length) < 0 ? End : other.End;
+            if (start.CompareTo(end, length) > 0)
+                throw new ArgumentOutOfRangeException(nameof(other), "The value does not intersect with the range.");
+            return new Range<T>(start, end);
+        }
+
+        /// <summary>Returns the intersection with an<paramref name="other"/> range in an arbitrary set.</summary>
+        /// <param name="other">The range to unify with.</param>
+        /// <returns>The intersection between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"><c>!this.Intersects(other, length)</c></exception>
+        [Pure]
+        public Range<T> Intersection(in Range<T> other)
+        {
+            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
+            Index<T> start = Start.CompareTo(other.Start) < 0 ? Start : other.Start;
+            Index<T> end = End.CompareTo(other.End) < 0 ? End : other.End;
+            if (start.CompareTo(end) > 0)
+                throw new ArgumentOutOfRangeException(nameof(other), "The value does not intersect with the range.");
+            return new Range<T>(start, end);
         }
 
         public override string ToString()
@@ -160,6 +232,10 @@ namespace GenericRange
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => HashCode.Combine(Start, End);
+        
+#endregion
+        
+#region Operators
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(in Range<T> left, in Range<T> right) => left.Equals(right);
@@ -169,5 +245,7 @@ namespace GenericRange
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Range<T>(in (T Start, T End) tuple) => new(tuple.Start, tuple.End);
+        
+#endregion
     }
 }
