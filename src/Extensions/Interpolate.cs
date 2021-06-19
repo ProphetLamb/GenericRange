@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
 namespace GenericRange.Extensions
 {
@@ -11,10 +13,10 @@ namespace GenericRange.Extensions
         /// <param name="length">The length of the collection.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<double> range, double length, double percentage)
         {
-            (double offset, double len) = range.GetOffsetAndLength(length);
-            return offset + len * percentage;
+            return range.Start.GetOffset(length) * (1 - percentage) + range.End.GetOffset(length) * percentage;
         }
         
         /// <summary>
@@ -23,10 +25,11 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<double> range, double percentage)
         {
-            (double offset, double len) = range.GetOffsetAndLength();
-            return offset + len * percentage;
+            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
         
         /// <summary>
@@ -36,10 +39,10 @@ namespace GenericRange.Extensions
         /// <param name="length">The length of the collection.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(this Range<float> range, float length, float percentage)
         {
-            (float offset, float len) = range.GetOffsetAndLength(length);
-            return offset + len * percentage;
+            return range.Start.GetOffset(length) * (1 - percentage) + range.End.GetOffset(length) * percentage;
         }
         
         /// <summary>
@@ -48,10 +51,11 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(this Range<float> range, float percentage)
         {
-            (float offset, float len) = range.GetOffsetAndLength();
-            return offset + len * percentage;
+            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
         
         /// <summary>
@@ -61,10 +65,10 @@ namespace GenericRange.Extensions
         /// <param name="length">The length of the collection.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<int> range, int length, double percentage)
         {
-            (int offset, int len) = range.GetOffsetAndLength(length);
-            return offset + len * percentage;
+            return range.Start.GetOffset(length) * (1 - percentage) + range.End.GetOffset(length) * percentage;
         }
         
         /// <summary>
@@ -73,10 +77,11 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<int> range, double percentage)
         {
-            (int offset, int len) = range.GetOffsetAndLength();
-            return offset + len * percentage;
+            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
     }
 }
