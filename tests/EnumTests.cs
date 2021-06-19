@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace GenericRange.Tests
 {
     [TestFixture]
-    public class TestEnum
+    public class EnumTests
     {
         private Range<Foo> all = new(Foo.None, Foo.None, true);
 
@@ -15,10 +15,7 @@ namespace GenericRange.Tests
             var foos = Enum.GetValues<Foo>();
             foreach (Foo foo in foos)
             {
-                if (foo == Foo.All)
-                    Assert.IsFalse(all.Contains(foo, Foo.All));
-                else
-                    Assert.IsTrue(all.Contains(foo, Foo.All));
+                Assert.IsTrue(all.Contains(foo, Foo.All));
             }
         }
     }

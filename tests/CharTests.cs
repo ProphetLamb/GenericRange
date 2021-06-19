@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace GenericRange.Tests
 {
     [TestFixture]
-    public class Tests
+    public class CharTests
     {
         public const char Max = (char)127;
         public Range<char> chs = new('a', 'z');

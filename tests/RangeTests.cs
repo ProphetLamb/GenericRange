@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace GenericRange.Tests
 {
     [TestFixture]
-    public class TestRange
+    public class RangeTests
     {
         public string HelloWorld = null!;
         public Range HelloRange;
