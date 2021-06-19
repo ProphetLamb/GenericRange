@@ -147,7 +147,7 @@ namespace GenericRange
             if (Start.IsFromEnd)
                 vsb.Append('^');
             vsb.Append(Start.Value.ToString());
-            vsb.Append(Start.IsFromEnd ? "..^" : "..");
+            vsb.Append(End.IsFromEnd ? "..^" : "..");
             vsb.Append(End.Value.ToString());
             return vsb.ToString();
         }
