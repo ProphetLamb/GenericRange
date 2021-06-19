@@ -12,6 +12,7 @@ namespace GenericRange
     ///     <see langword="uint"/>, <see langword="long"/>, <see langword="ulong"/>, <see langword="float"/>, <see langword="double"/>, <see langword="decimal"/>, <see langword="char"/>,
     ///     <see langword="TimeSpan"/>, or any <see cref="Enum"/> type with one of the aforementioned as underlying type.
     /// </typeparam>
+    [Serializable]
     [DebuggerDisplay("{ToString(),nq}")]
     public readonly struct Range<T> : IEquatable<Range<T>>
         where T : unmanaged, IComparable
@@ -27,9 +28,7 @@ namespace GenericRange
             End = end;
         }
         
-        /// <summary>
-        /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
-        /// </summary>
+        /// <summary>Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.</summary>
         /// <param name="start">The start index.</param>
         /// <param name="startFromEnd">Whether the start index is from the end.</param>
         /// <param name="end">The end index.</param>
@@ -40,9 +39,7 @@ namespace GenericRange
             End = new Index<T>(end, endFromEnd);
         }
         
-        /// <summary>
-        /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
-        /// </summary>
+        /// <summary>Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.</summary>
         /// <param name="start">The start index.</param>
         /// <param name="startFromEnd">Whether the start index is from the end.</param>
         /// <param name="end">The end index.</param>
@@ -52,9 +49,7 @@ namespace GenericRange
             End = new Index<T>(end);
         }
 
-        /// <summary>
-        /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
-        /// </summary>
+        /// <summary>Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.</summary>
         /// <param name="start">The start index.</param>
         /// <param name="end">The end index.</param>
         /// <param name="endFromEnd">Whether the end index is from the end.</param>
@@ -173,6 +168,7 @@ namespace GenericRange
         /// <param name="other">The range to unify with.</param>
         /// <param name="length">The length of the set.</param>
         /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <remarks>Same as <see cref="Span(Range{T}, T)"/> but requires the union to be continues.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -180,22 +176,44 @@ namespace GenericRange
         {
             if (End.CompareTo(other.Start, length) < 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
-            return new Range<T>(Start.CompareTo(other.Start, length) < 0 ? Start : other.Start, End.CompareTo(other.End, length) < 0 ? other.End : End);
+            return Span(other, length);
         }
         
         /// <summary>Returns the continuous union with an<paramref name="other"/> range in an arbitrary set.</summary>
         /// <param name="other">The range to unify with.</param>
         /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <remarks>Same as <see cref="Span(Range{T})"/> but requires the union to be continues.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Range<T> Union(in Range<T> other)
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
             if (End.CompareTo(other.Start) < 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
-            return new Range<T>(Start.CompareTo(other.Start) < 0 ? Start : other.Start, End.CompareTo(other.End) < 0 ? other.End : End);
+            return Span(other);
+        }
+
+        /// <summary>Returns the expanded-union with an<paramref name="other"/> range in a set of a given <paramref name="length"/>.</summary>
+        /// <param name="other">The range to unify with.</param>
+        /// <param name="length">The length of the set.</param>
+        /// <returns>The expanded-union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Range<T> Span(in Range<T> other, in T length)
+        {
+            return new(Start.CompareTo(other.Start, length) < 0 ? Start : other.Start, End.CompareTo(other.End, length) < 0 ? other.End : End);
+        }
+        
+        /// <summary>Returns the expanded-union with an<paramref name="other"/> range in an arbitrary set.</summary>
+        /// <param name="other">The range to unify with.</param>
+        /// <returns>The expanded-union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Range<T> Span(in Range<T> other)
+        {
+            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
+            return new(Start.CompareTo(other.Start) < 0 ? Start : other.Start, End.CompareTo(other.End) < 0 ? other.End : End);
         }
 
         /// <summary>Returns the intersection with an<paramref name="other"/> range in a set of a given <paramref name="length"/>.</summary>
@@ -228,7 +246,15 @@ namespace GenericRange
                 throw new ArgumentOutOfRangeException(nameof(other), "The value does not intersect with the range.");
             return new Range<T>(start, end);
         }
-        
+
+        /// <summary>Returns a new <see cref="Range{T}"/> with a start-index equal to <see cref="Start"/> and the provided end-index.</summary>
+        /// <param name="endIndex">The end-index.</param>
+        public Range<T> GetLeftPart(in Index<T> endIndex) => new(Start, endIndex);
+
+        /// <summary>Returns a new <see cref="Range{T}"/> with a the provided start-index and end-index equal to <see cref="End"/>.</summary>
+        /// <param name="startIndex">The end-index.</param>
+        public Range<T> GetRightPart(in Index<T> startIndex) => new(startIndex, End);
+
         public override string ToString()
         {
             ValueStringBuilder vsb = new(stackalloc char[32]);
@@ -240,9 +266,7 @@ namespace GenericRange
             return vsb.ToString();
         }
         
-        /// <summary>
-        ///     Indicates whether the indices inside a set of a specific <paramref name="length"/> of the <see cref="Range{T}"/> are equal to another. 
-        /// </summary>
+        /// <summary>Indicates whether the indices inside a set of a specific <paramref name="length"/> of the <see cref="Range{T}"/> are equal to another.</summary>
         /// <param name="other">The other <see cref="Range{T}"/>.</param>
         /// <param name="length">The length of the set.</param>
         /// <returns><see langword="true"/> if the current object is equal to the other parameter; otherwise, <see langword="false"/>.</returns>
