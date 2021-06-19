@@ -39,6 +39,18 @@ namespace GenericRange
             Start = new Index<T>(start, startFromEnd);
             End = new Index<T>(end, endFromEnd);
         }
+        
+        /// <summary>
+        /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
+        /// </summary>
+        /// <param name="start">The start index.</param>
+        /// <param name="startFromEnd">Whether the start index is from the end.</param>
+        /// <param name="end">The end index.</param>
+        public Range(in T start, bool startFromEnd, in T end)
+        {
+            Start = new Index<T>(start, startFromEnd);
+            End = new Index<T>(end);
+        }
 
         /// <summary>
         /// Constructs a <see cref="Range{T}"/> with the specified <paramref name="start"/>, and <paramref name="end"/> indices.
@@ -68,67 +80,71 @@ namespace GenericRange
 
         /// <summary>Indicates whether a specified value is within the range.</summary>
         /// <param name="value">The value to seek.</param>
-        /// <param name="length">The value that represents the length of the collection that the range will be used with.</param>
+        /// <param name="length">The value that represents the length of the set that the range will be used with.</param>
         /// <returns><see langword="true"/> if the <paramref name="value"/> is within the range, otherwise; <see langword="false"/>.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Contains(in T value, in T length) => Start.GetOffset(length).CompareTo(value) <= 0 && End.GetOffset(length).CompareTo(value) > 0;
+        public bool Contains(in T value, in T length) => Start.CompareTo(value, length) <= 0 && End.CompareTo(value, length) >= 0;
         
         /// <summary>Indicates whether a specified value is within the range. Disallows indices from end in favour of performance.</summary>
         /// <param name="value">The value to seek.</param>
         /// <returns><see langword="true"/> if the <paramref name="value"/> is within the range, otherwise; <see langword="false"/>.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(in T value)
         {
             Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            return Start.Value.CompareTo(value) <= 0 && End.Value.CompareTo(value) > 0;
+            return Start.CompareTo(value) <= 0 && End.CompareTo(value) >= 0;
         }
 
         /// <summary>Indicates whether a <see cref="Range{T}"/> is completely contained within the range.</summary>
         /// <param name="other">The other range.</param>
-        /// <param name="length">The value that represents the length of the collection that the range will be used with.</param>
+        /// <param name="length">The value that represents the length of the set that the range will be used with.</param>
         /// <returns><see langword="true"/> if the <paramref name="other"/> range completely contained within the range, otherwise; <see langword="false"/>.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Encompasses(in Range<T> other, in T length)
         {
-            T startOff = Start.GetOffset(length), endOff = End.GetOffset(length), otherStartOff = other.Start.GetOffset(length), otherEndOff = other.End.GetOffset(length);
-            return startOff.CompareTo(otherStartOff) <= 0 && endOff.CompareTo(otherStartOff) >= 0
-                && startOff.CompareTo(otherEndOff) <= 0 && endOff.CompareTo(otherEndOff) >= 0;
+            return Start.CompareTo(other.Start, length) <= 0 && End.CompareTo(other.Start, length) >= 0
+                && Start.CompareTo(other.End, length) <= 0 && End.CompareTo(other.End, length) >= 0;
         }
         
         /// <summary>Indicates whether a <see cref="Range{T}"/> is completely contained within the range. Disallows indices from end in favour of performance.</summary>
         /// <param name="other">The other range.</param>
         /// <returns><see langword="true"/> if the <paramref name="other"/> range completely contained within the range, otherwise; <see langword="false"/>.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Encompasses(in Range<T> other)
         {
             Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            return Start.Value.CompareTo(other.Start.Value) <= 0 && End.Value.CompareTo(other.Start.Value) >= 0
-                && Start.Value.CompareTo(other.End.Value) <= 0 && End.Value.CompareTo(other.End.Value) >= 0;
+            return Start.CompareTo(other.Start) <= 0 && End.CompareTo(other.Start) >= 0
+                && Start.CompareTo(other.End) <= 0 && End.CompareTo(other.End) >= 0;
         }
         
         /// <summary>Indicates whether a <see cref="Range{T}"/> is intersects with the range.</summary>
         /// <param name="other">The other range.</param>
-        /// <param name="length">The value that represents the length of the collection that the range will be used with.</param>
+        /// <param name="length">The value that represents the length of the set that the range will be used with.</param>
         /// <returns><see langword="true"/> if the <paramref name="other"/> range intersects with the range, otherwise; <see langword="false"/>.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Intersects(in Range<T> other, in T length)
         {
-            T startOff = Start.GetOffset(length), endOff = End.GetOffset(length), otherStartOff = other.Start.GetOffset(length), otherEndOff = other.End.GetOffset(length);
-            return startOff.CompareTo(otherEndOff) <= 0 && endOff.CompareTo(otherStartOff) >= 0;
+            return Start.CompareTo(other.End, length) <= 0 && End.CompareTo(other.Start, length) >= 0;
         }
         
         /// <summary>Indicates whether a <see cref="Range{T}"/> is intersects with the range. Disallows indices from end in favour of performance.</summary>
         /// <param name="other">The other range.</param>
         /// <returns><see langword="true"/> if the <paramref name="other"/> range intersects with the range, otherwise; <see langword="false"/>.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Intersects(in Range<T> other)
         {
             Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            return Start.Value.CompareTo(other.End.Value) <= 0 && End.Value.CompareTo(other.Start.Value) >= 0;
+            return Start.CompareTo(other.End) <= 0 && End.CompareTo(other.Start) >= 0;
         }
         
-        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a collection length.</summary>
-        /// <param name="length">The value that represents the length of the collection that the range will be used with.</param>
+        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a set length.</summary>
+        /// <param name="length">The value that represents the length of the set that the range will be used with.</param>
         /// <returns>The start offset and length of the range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -141,7 +157,7 @@ namespace GenericRange
             return (start, Index<T>.Subtract(end, start));
         }
         
-        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a collection length. Disallows indices from end in favour of performance.</summary>
+        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a set length. Disallows indices from end in favour of performance.</summary>
         /// <returns>The start offset and length of the range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -160,11 +176,11 @@ namespace GenericRange
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Range<T> Union(in Range<T> other, T length)
+        public Range<T> Union(in Range<T> other, in T length)
         {
             if (End.CompareTo(other.Start, length) < 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
-            return new Range<T>(Start.CompareTo(other.Start, length) < 0 ? other.Start : Start, End.CompareTo(other.End, length) < 0 ? other.End : End);
+            return new Range<T>(Start.CompareTo(other.Start, length) < 0 ? Start : other.Start, End.CompareTo(other.End, length) < 0 ? other.End : End);
         }
         
         /// <summary>Returns the continuous union with an<paramref name="other"/> range in an arbitrary set.</summary>
@@ -179,7 +195,7 @@ namespace GenericRange
             Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
             if (End.CompareTo(other.Start) < 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
-            return new Range<T>(Start.CompareTo(other.Start) < 0 ? other.Start : Start, End.CompareTo(other.End) < 0 ? other.End : End);
+            return new Range<T>(Start.CompareTo(other.Start) < 0 ? Start : other.Start, End.CompareTo(other.End) < 0 ? other.End : End);
         }
 
         /// <summary>Returns the intersection with an<paramref name="other"/> range in a set of a given <paramref name="length"/>.</summary>
@@ -188,9 +204,9 @@ namespace GenericRange
         /// <returns>The intersection between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><c>!this.Intersects(other, length)</c></exception>
         [Pure]
-        public Range<T> Intersection(in Range<T> other, T length)
+        public Range<T> Clamp(in Range<T> other, in T length)
         {
-            Index<T> start = Start.CompareTo(other.Start, length) < 0 ? Start : other.Start;
+            Index<T> start = Start.CompareTo(other.Start, length) < 0 ? other.Start : Start;
             Index<T> end = End.CompareTo(other.End, length) < 0 ? End : other.End;
             if (start.CompareTo(end, length) > 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The value does not intersect with the range.");
@@ -202,17 +218,17 @@ namespace GenericRange
         /// <returns>The intersection between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><c>!this.Intersects(other, length)</c></exception>
         [Pure]
-        public Range<T> Intersection(in Range<T> other)
+        public Range<T> Clamp(in Range<T> other)
         {
             Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
             Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
-            Index<T> start = Start.CompareTo(other.Start) < 0 ? Start : other.Start;
+            Index<T> start = Start.CompareTo(other.Start) < 0 ? other.Start : Start;
             Index<T> end = End.CompareTo(other.End) < 0 ? End : other.End;
             if (start.CompareTo(end) > 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The value does not intersect with the range.");
             return new Range<T>(start, end);
         }
-
+        
         public override string ToString()
         {
             ValueStringBuilder vsb = new(stackalloc char[32]);
@@ -223,10 +239,22 @@ namespace GenericRange
             vsb.Append(End.Value.ToString());
             return vsb.ToString();
         }
-
+        
+        /// <summary>
+        ///     Indicates whether the indices inside a set of a specific <paramref name="length"/> of the <see cref="Range{T}"/> are equal to another. 
+        /// </summary>
+        /// <param name="other">The other <see cref="Range{T}"/>.</param>
+        /// <param name="length">The length of the set.</param>
+        /// <returns><see langword="true"/> if the current object is equal to the other parameter; otherwise, <see langword="false"/>.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Equals(Range<T> other, T length) => Start.Equals(other.Start, length) && End.Equals(other.End, length);
+        
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Range<T> other) => Start.Equals(other.Start) && End.Equals(other.End);
 
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals([NotNullWhen(true)] object? obj) => obj is Range<T> other && Equals(other);
 
