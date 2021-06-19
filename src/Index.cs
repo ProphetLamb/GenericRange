@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace GenericRange
@@ -15,35 +16,69 @@ namespace GenericRange
     public readonly partial struct Index<T> : IEquatable<Index<T>>, IComparable, IComparable<Index<T>>
         where T : unmanaged, IComparable
     {
-        /// <summary>Construct an Index using a value and indicating if the index is from the start or from the end.</summary>
+#region Ctor
+
+        /// <summary>Construct an <see cref="Index{T}"/> using a value and indicating if the index is from the start or from the end.</summary>
         /// <param name="value">The index value.</param>
         /// <param name="fromEnd">Indicating if the index is from the start or from the end.</param>
-        /// <remarks>If the Index constructed from the end, index value 1 means pointing at the last element and index value 0 means pointing at beyond last element.</remarks>
-        public Index(in T value, bool fromEnd = false)
+        /// <remarks>If the <see cref="Index{T}"/> constructed from the end, index value 1 means pointing at the last element and index value 0 means pointing at beyond last element.</remarks>
+        public Index(in T value, bool fromEnd)
         {
             Value = value;
             IsFromEnd = fromEnd;
         }
 
-        private Index(in T value)
+        /// <summary>Construct an <see cref="Index{T}"/> from the start using a value.</summary>
+        /// <param name="value">The index value.</param>
+        public Index(in T value)
         {
             Value = value;
             IsFromEnd = false;
         }
+
+#endregion
+
+#region Properties
 
         /// <summary>Indicates whether the index is from the start or the end.</summary>
         public bool IsFromEnd { get; }
         
         /// <summary>Returns the index value.</summary>
         public T Value { get; }
+        
+#endregion
 
+#region Public members
+
+        /// <summary>
+        /// Returns the offset from the start of a set.
+        /// </summary>
+        /// <param name="length">The length of the set.</param>
+        /// <returns>The offset from the start of a set.</returns>
+        [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T GetOffset(in T length) => IsFromEnd ? Subtract(length, Value) : Value;
 
-        public override string ToString() => "[Value = \"" + Value + "\", IsFromEnd = " + IsFromEnd + "]";
+        public override string ToString()
+        {
+            ValueStringBuilder sb = new(stackalloc char[16]);
+            if (IsFromEnd)
+                sb.Append('^');
+            sb.Append(Value.ToString());
+            return sb.ToString();
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Index<T> other) => Value.Equals(other.Value) && IsFromEnd == other.IsFromEnd;
+        public bool Equals(Index<T> other) => s_comparer.Compare(Value, other.Value) == 0 && IsFromEnd == other.IsFromEnd;
+        
+        /// <summary>
+        /// Indicates whether the <see cref="Index{T}"/> points to the same element in a set.
+        /// </summary>
+        /// <param name="other">An object to compare with this object.</param>
+        /// <param name="length">The length of the collection.</param>
+        /// <returns><see langword="true"/> if the current object is equal to the other parameter; otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public bool Equals(Index<T> other, T length) => CompareTo(other, length) == 0;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals([NotNullWhen(true)] object? obj) => obj is Index<T> other && Equals(other) || obj is T value && Equals(value);
@@ -59,10 +94,56 @@ namespace GenericRange
         };
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CompareTo(Index<T> other) => Value.CompareTo(other.Value);
+        public int CompareTo(Index<T> other)
+        {
+            Debug.Assert(!IsFromEnd);
+            return s_comparer.Compare(Value, other.Value);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CompareTo(in Index<T> other, in T length) => GetOffset(length).CompareTo(other.GetOffset(length));
+        public int CompareTo(in Index<T> other, in T length) => s_comparer.Compare(GetOffset(length), other.GetOffset(length));
+
+        /// <summary>
+        /// Returns the <see cref="Index{T}"/> that points to the element with the lower index of two indices.
+        /// </summary>
+        /// <param name="left">The first index.</param>
+        /// <param name="right">The second index.</param>
+        /// <param name="length">The length of the set.</param>
+        /// <returns>The smaller <see cref="Index{T}"/>.</returns>
+        [Pure]
+        public static Index<T> Min(in Index<T> left, in Index<T> right, T length) => left.CompareTo(right, length) < 0 ? left : right;
+
+        /// <summary>
+        /// Returns the smaller of the two indices.
+        /// </summary>
+        /// <param name="left">The first index.</param>
+        /// <param name="right">The second index.</param>
+        /// <returns>The smaller <see cref="Index{T}"/>.</returns>
+        [Pure]
+        public static Index<T> Min(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? left : right;
+        
+        /// <summary>
+        /// Returns the <see cref="Index{T}"/> that points to the element with the higher index of two indices.
+        /// </summary>
+        /// <param name="left">The first index.</param>
+        /// <param name="right">The second index.</param>
+        /// <param name="length">The length of the set.</param>
+        /// <returns>The greater <see cref="Index{T}"/>.</returns>
+        [Pure]
+        public static Index<T> Max(in Index<T> left, in Index<T> right, T length) => left.CompareTo(right, length) < 0 ? right : left;
+        
+        /// <summary>
+        /// Returns the greater of the two indices.
+        /// </summary>
+        /// <param name="left">The first index.</param>
+        /// <param name="right">The second index.</param>
+        /// <returns>The greater <see cref="Index{T}"/>.</returns>
+        [Pure]
+        public static Index<T> Max(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? right : left;
+
+#endregion
+
+#region Operators
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(in Index<T> left, in Index<T> right) => left.Equals(right);
@@ -72,5 +153,7 @@ namespace GenericRange
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Index<T>(in T value) => new(value);
+        
+#endregion
     }
 }
