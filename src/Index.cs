@@ -89,7 +89,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(object? obj) => obj switch {
             Index<T> other => CompareTo(other),
-            T value => CompareTo(value),
+            T value => CompareTo(new Index<T>(value)),
             _ => throw new ArgumentException("Allowed types for the value is Index<T> or T.", nameof(obj))
         };
 
