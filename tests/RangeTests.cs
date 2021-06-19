@@ -1,5 +1,7 @@
 ﻿using System;
 
+using GenericRange.Extensions;
+
 using NUnit.Framework;
 
 namespace GenericRange.Tests
