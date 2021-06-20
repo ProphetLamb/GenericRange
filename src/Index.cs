@@ -99,7 +99,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(Index<T> other)
         {
-            AssertNotFromEnd();
+            Debug.Assert(IsFromEnd == other.IsFromEnd, "IsFromEnd == other.IsFromEnd");
             return s_comparer.Compare(Value, other.Value);
         }
 
@@ -171,6 +171,13 @@ namespace GenericRange
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Index<T>(in T value) => new(value);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator T(in Index<T> index)
+        {
+            index.AssertNotFromEnd();
+            return index.Value;
+        }
         
 #endregion
     }
