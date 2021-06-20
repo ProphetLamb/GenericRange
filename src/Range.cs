@@ -79,16 +79,17 @@ namespace GenericRange
         /// <returns><see langword="true"/> if the <paramref name="value"/> is within the range, otherwise; <see langword="false"/>.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Contains(in T value, in T length) => Start.CompareTo(value, length) <= 0 && End.CompareTo(value, length) >= 0;
+        public bool Contains(in Index<T> value, in T length) => Start.CompareTo(value, length) <= 0 && End.CompareTo(value, length) >= 0;
         
         /// <summary>Indicates whether a specified value is within the range. Disallows indices from end in favour of performance.</summary>
         /// <param name="value">The value to seek.</param>
         /// <returns><see langword="true"/> if the <paramref name="value"/> is within the range, otherwise; <see langword="false"/>.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Contains(in T value)
+        public bool Contains(in Index<T> value)
         {
             AssertNotFromEnd();
+            value.AssertNotFromEnd();
             return Start.CompareTo(value) <= 0 && End.CompareTo(value) >= 0;
         }
 
@@ -276,7 +277,7 @@ namespace GenericRange
         /// <returns><see langword="true"/> if the current object is equal to the other parameter; otherwise, <see langword="false"/>.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Range<T> other, T length) => Start.Equals(other.Start, length) && End.Equals(other.End, length);
+        public bool Equals(in Range<T> other, in T length) => Start.Equals(other.Start, length) && End.Equals(other.End, length);
         
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
