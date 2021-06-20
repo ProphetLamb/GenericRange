@@ -34,6 +34,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static decimal PercentageOf(this Range<decimal> range, decimal value)
         {
+            value.AssertNotFromEnd();
             (decimal offset, decimal len) = range.GetOffsetAndLength();
             return (value - offset) / len;
         }
@@ -67,6 +68,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double PercentageOf(this Range<double> range, double value)
         {
+            value.AssertNotFromEnd();
             (double offset, double len) = range.GetOffsetAndLength();
             return (value - offset) / len;
         }
@@ -100,6 +102,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float PercentageOf(this Range<float> range, float value)
         {
+            value.AssertNotFromEnd();
             (float offset, float len) = range.GetOffsetAndLength();
             return (value - offset) / len;
         }
@@ -133,6 +136,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double PercentageOf(this Range<int> range, int value)
         {
+            value.AssertNotFromEnd();
             (int offset, int len) = range.GetOffsetAndLength();
             return (value - offset) / (double)len;
         }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
@@ -31,7 +30,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static decimal Interpolate(this Range<decimal> range, decimal percentage)
         {
-            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            range.AssertNotFromEnd();
             return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
         
@@ -60,7 +59,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<double> range, double percentage)
         {
-            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            range.AssertNotFromEnd();
             return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
         
@@ -88,7 +87,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(this Range<float> range, float percentage)
         {
-            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            range.AssertNotFromEnd();
             return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
         
@@ -116,7 +115,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<int> range, double percentage)
         {
-            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            range.AssertNotFromEnd();
             return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
         
@@ -144,7 +143,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<long> range, double percentage)
         {
-            Debug.Assert(!range.Start.IsFromEnd && !range.End.IsFromEnd, "!range.Start.IsFromEnd && !range.End.IsFromEnd");
+            range.AssertNotFromEnd();
             return range.Start.Value * (1 - percentage) + range.End.Value * percentage;
         }
     }
