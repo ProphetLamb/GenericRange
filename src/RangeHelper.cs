@@ -21,6 +21,13 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static T Cast<T>(this object obj) => (T)obj;
         
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static TOut Convert<TOut, TIn>(this TIn obj)
+            where TIn : unmanaged, IConvertible
+        {
+            return (TOut)System.Convert.ChangeType(obj, typeof(TOut));
+        }
+
         internal static Func<object, object, object> GetGenericSubtractDelegate<T>() where T : unmanaged, IComparable
         {
             Type t = typeof(T);
