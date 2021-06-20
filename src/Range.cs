@@ -88,7 +88,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(in T value)
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            AssertNotFromEnd();
             return Start.CompareTo(value) <= 0 && End.CompareTo(value) >= 0;
         }
 
@@ -111,7 +111,8 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Encompasses(in Range<T> other)
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            AssertNotFromEnd();
+            other.AssertNotFromEnd();
             return Start.CompareTo(other.Start) <= 0 && End.CompareTo(other.Start) >= 0
                 && Start.CompareTo(other.End) <= 0 && End.CompareTo(other.End) >= 0;
         }
@@ -134,7 +135,8 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Intersects(in Range<T> other)
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            AssertNotFromEnd();
+            other.AssertNotFromEnd();
             return Start.CompareTo(other.End) <= 0 && End.CompareTo(other.Start) >= 0;
         }
         
@@ -158,7 +160,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (T Offset, T Length) GetOffsetAndLength()
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
+            AssertNotFromEnd();
             if (Start.CompareTo(End) > 0)
                 throw new ArgumentOutOfRangeException(nameof(Start), "Value less then " + nameof(End));
             return (Start.Value, Index<T>.Subtract(End.Value, Start.Value));
@@ -188,6 +190,8 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Range<T> Union(in Range<T> other)
         {
+            AssertNotFromEnd();
+            other.AssertNotFromEnd();
             if (End.CompareTo(other.Start) < 0)
                 throw new ArgumentOutOfRangeException(nameof(other), "The ranges are not continuous.");
             return Span(other);
@@ -211,8 +215,8 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Range<T> Span(in Range<T> other)
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
+            AssertNotFromEnd();
+            other.AssertNotFromEnd();
             return new(Start.CompareTo(other.Start) < 0 ? Start : other.Start, End.CompareTo(other.End) < 0 ? other.End : End);
         }
 
@@ -238,8 +242,8 @@ namespace GenericRange
         [Pure]
         public Range<T> Clamp(in Range<T> other)
         {
-            Debug.Assert(!Start.IsFromEnd && !End.IsFromEnd, "!Start.IsFromEnd && !End.IsFromEnd");
-            Debug.Assert(!other.Start.IsFromEnd && !other.End.IsFromEnd, "!other.Start.IsFromEnd && !other.End.IsFromEnd");
+            AssertNotFromEnd();
+            other.AssertNotFromEnd();
             Index<T> start = Start.CompareTo(other.Start) < 0 ? other.Start : Start;
             Index<T> end = End.CompareTo(other.End) < 0 ? End : other.End;
             if (start.CompareTo(end) > 0)
@@ -285,6 +289,17 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => HashCode.Combine(Start, End);
         
+#endregion
+
+#region Internal members
+        
+        [Conditional("DEBUG")]
+        internal void AssertNotFromEnd()
+        {
+            Start.AssertNotFromEnd();
+            End.AssertNotFromEnd();
+        }
+
 #endregion
         
 #region Operators

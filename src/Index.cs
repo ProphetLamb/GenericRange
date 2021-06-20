@@ -99,7 +99,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(Index<T> other)
         {
-            Debug.Assert(!IsFromEnd);
+            AssertNotFromEnd();
             return s_comparer.Compare(Value, other.Value);
         }
 
@@ -151,6 +151,16 @@ namespace GenericRange
 
 #endregion
 
+#region InternalMembers
+
+        [Conditional("DEBUG")]
+        internal void AssertNotFromEnd()
+        {
+            Debug.Assert(!IsFromEnd, "!index.IsFromEnd");
+        }
+        
+#endregion
+        
 #region Operators
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
