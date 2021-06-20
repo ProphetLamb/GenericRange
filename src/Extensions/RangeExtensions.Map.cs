@@ -17,7 +17,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static decimal Map(this Range<decimal> source, decimal sourceLength, Range<decimal> target, decimal targetLength, Index<decimal> value)
+        public static decimal Map(this Range<decimal> source, decimal sourceLength, in Range<decimal> target, decimal targetLength, in Index<decimal> value)
         {
             return target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
         }
@@ -31,7 +31,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static decimal Map(this Range<decimal> source, Range<decimal> target, Index<decimal> value)
+        public static decimal Map(this Range<decimal> source, in Range<decimal> target, in Index<decimal> value)
         {
             return target.Interpolate(source.PercentageOf(value));
         }
@@ -47,7 +47,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Map(this Range<double> source, double sourceLength, Range<double> target, double targetLength, Index<double> value)
+        public static double Map(this Range<double> source, double sourceLength, in Range<double> target, double targetLength, in Index<double> value)
         {
             return target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
         }
@@ -61,7 +61,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Map(this Range<double> source, Range<double> target, Index<double> value)
+        public static double Map(this Range<double> source, in Range<double> target, in Index<double> value)
         {
             return target.Interpolate(source.PercentageOf(value));
         }
@@ -77,7 +77,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Map(this Range<float> source, float sourceLength, Range<float> target, float targetLength, Index<float> value)
+        public static float Map(this Range<float> source, float sourceLength, in Range<float> target, float targetLength, in Index<float> value)
         {
             return target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
         }
@@ -91,7 +91,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Map(this Range<float> source, Range<float> target, Index<float> value)
+        public static float Map(this Range<float> source, in Range<float> target, in Index<float> value)
         {
             return target.Interpolate(source.PercentageOf(value));
         }
@@ -107,7 +107,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Map(this Range<long> source, long sourceLength, Range<long> target, long targetLength, Index<long> value)
+        public static long Map(this Range<long> source, long sourceLength, in Range<long> target, long targetLength, in Index<long> value)
         {
             return (long)target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
         }
@@ -121,7 +121,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Map(this Range<long> source, Range<long> target, Index<long> value)
+        public static long Map(this Range<long> source, in Range<long> target, in Index<long> value)
         {
             return (long)target.Interpolate(source.PercentageOf(value));
         }
@@ -138,7 +138,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Map(this Range<long> source, long sourceLength, Range<long> target, long targetLength, Index<long> value, MidpointRounding rounding)
+        public static long Map(this Range<long> source, long sourceLength, in Range<long> target, long targetLength, in Index<long> value, MidpointRounding rounding)
         {
             return (long)Math.Round(target.Interpolate(targetLength, source.PercentageOf(sourceLength, value)), rounding);
         }
@@ -153,7 +153,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Map(this Range<long> source, Range<long> target, Index<long> value, MidpointRounding rounding)
+        public static long Map(this Range<long> source, in Range<long> target, in Index<long> value, MidpointRounding rounding)
         {
             return (long)Math.Round(target.Interpolate(source.PercentageOf(value)), rounding);
         }
@@ -169,7 +169,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Map(this Range<int> source, int sourceLength, Range<int> target, int targetLength, Index<int> value)
+        public static int Map(this Range<int> source, int sourceLength, in Range<int> target, int targetLength, in Index<int> value)
         {
             return (int)target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
         }
@@ -183,7 +183,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Map(this Range<int> source, Range<int> target, Index<int> value)
+        public static int Map(this Range<int> source, in Range<int> target, in Index<int> value)
         {
             return (int)target.Interpolate(source.PercentageOf(value));
         }
@@ -200,7 +200,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Map(this Range<int> source, int sourceLength, Range<int> target, int targetLength, Index<int> value, MidpointRounding rounding)
+        public static int Map(this Range<int> source, int sourceLength, in Range<int> target, int targetLength, in Index<int> value, MidpointRounding rounding)
         {
             return (int)Math.Round(target.Interpolate(targetLength, source.PercentageOf(sourceLength, value)), rounding);
         }
@@ -215,7 +215,7 @@ namespace GenericRange.Extensions
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Map(this Range<int> source, Range<int> target, Index<int> value, MidpointRounding rounding)
+        public static int Map(this Range<int> source, in Range<int> target, in Index<int> value, MidpointRounding rounding)
         {
             return (int)Math.Round(target.Interpolate(source.PercentageOf(value)), rounding);
         }
