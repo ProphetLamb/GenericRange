@@ -23,7 +23,7 @@
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageTags>C#</PackageTags>
-    <Version>0.0.7</Version>
+    <Version>0.0.8</Version>
   </PropertyGroup>
 
 </Project>
