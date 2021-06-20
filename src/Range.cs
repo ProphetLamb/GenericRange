@@ -313,6 +313,11 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Range<T>(in (T Start, T End) tuple) => new(tuple.Start, tuple.End);
         
+        /// <summary>Uses <see cref="Convert.ChangeType(object, Type)"/> to convert the range to the specific generic type.</summary>
+        /// <remarks>Warning: does not work for not <see cref="IConvertible"/>'s such as <see cref="Enum"/> types.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Range<T>(in Range range) => new(new Index<T>(range.Start.Value.Convert<T, int>(), range.Start.IsFromEnd), new Index<T>(range.End.Value.Convert<T, int>(), range.End.IsFromEnd));
+
 #endregion
     }
 }
