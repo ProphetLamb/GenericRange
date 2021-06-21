@@ -178,7 +178,12 @@ namespace GenericRange
             index.AssertNotFromEnd();
             return index.Value;
         }
-        
+
+        /// <summary>Uses <see cref="Convert.ChangeType(object, Type)"/> to convert the indexx to the specific generic type.</summary>
+        /// <remarks>Warning: does not work for not <see cref="IConvertible"/>'s such as <see cref="Enum"/> types.</remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static explicit operator Index<T>(in Index index) => new(index.Value.Convert<T, int>(), index.IsFromEnd);
+
 #endregion
     }
 }
