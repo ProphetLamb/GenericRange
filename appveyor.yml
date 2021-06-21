@@ -34,7 +34,7 @@ after_build:
   - dotnet publish "src/" --no-build --version-suffix %LABEL% -o artifacts\publish
 
 test_script:
-  - dotnet test "tests/" --no-build --no-restore --test-adapter-path:. --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - dotnet test "tests/" --no-build --no-restore --test-adapter-path:. --logger:"Appveyor;LogFilePath=./tests/overage.opencover.xml" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   - codecov -f "tests/coverage.opencover.xml"
 
 artifacts:
