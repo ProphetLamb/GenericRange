@@ -26,10 +26,11 @@ before_build:
 
 build:
   parallel: true
-  project: GenericRange.sln
+  project: src\GenericRange.csproj
+  verbosity: minimal
 
 test_script:
-  - dotnet test "tests/" -c %CONFIGURATION% --no-build --no-restore --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - dotnet test "tests/" -c %CONFIGURATION% --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   - codecov -f "tests/coverage.opencover.xml"
 
 artifacts:
