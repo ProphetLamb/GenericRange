@@ -19,7 +19,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static decimal Map(this Range<decimal> source, decimal sourceLength, in Range<decimal> target, decimal targetLength, in Index<decimal> value)
         {
-            return target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
+            return target.Interpolate(targetLength, source.PercentageOf(value, sourceLength));
         }
         
         /// <summary>
@@ -50,7 +50,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Map(this Range<double> source, double sourceLength, in Range<double> target, double targetLength, in Index<double> value)
         {
-            return target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
+            return target.Interpolate(targetLength, source.PercentageOf(value, sourceLength));
         }
         
         /// <summary>
@@ -81,7 +81,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Map(this Range<float> source, float sourceLength, in Range<float> target, float targetLength, in Index<float> value)
         {
-            return target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
+            return target.Interpolate(source.PercentageOf(value, sourceLength), targetLength);
         }
         
         /// <summary>
@@ -112,7 +112,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Map(this Range<long> source, long sourceLength, in Range<long> target, long targetLength, in Index<long> value)
         {
-            return (long)target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
+            return (long)target.Interpolate(source.PercentageOf(value, sourceLength), targetLength);
         }
         
         /// <summary>
@@ -144,7 +144,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Map(this Range<long> source, long sourceLength, in Range<long> target, long targetLength, in Index<long> value, MidpointRounding rounding)
         {
-            return (long)Math.Round(target.Interpolate(targetLength, source.PercentageOf(sourceLength, value)), rounding);
+            return (long)Math.Round(target.Interpolate(source.PercentageOf(value, sourceLength), targetLength), rounding);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Map(this Range<int> source, int sourceLength, in Range<int> target, int targetLength, in Index<int> value)
         {
-            return (int)target.Interpolate(targetLength, source.PercentageOf(sourceLength, value));
+            return (int)target.Interpolate(source.PercentageOf(value, sourceLength), targetLength);
         }
         
         /// <summary>
@@ -208,7 +208,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Map(this Range<int> source, int sourceLength, in Range<int> target, int targetLength, in Index<int> value, MidpointRounding rounding)
         {
-            return (int)Math.Round(target.Interpolate(targetLength, source.PercentageOf(sourceLength, value)), rounding);
+            return (int)Math.Round(target.Interpolate(source.PercentageOf(value, sourceLength), targetLength), rounding);
         }
 
         /// <summary>

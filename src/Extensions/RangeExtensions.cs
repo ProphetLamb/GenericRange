@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 
 namespace GenericRange.Extensions
 {
@@ -9,6 +11,8 @@ namespace GenericRange.Extensions
         /// </summary>
         /// <param name="range">The IConvertible range.</param>
         /// <returns>The <see cref="Range"/> equivalent to the <paramref name="range"/>.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Range ToRange<T>(this Range<T> range) where T : unmanaged, IComparable, IConvertible
         {
             return new(range.Start.ToIndex(), range.End.ToIndex());
@@ -19,6 +23,8 @@ namespace GenericRange.Extensions
         /// </summary>
         /// <param name="index">The IConvertible index.</param>
         /// <returns>The <see cref="Index"/> equivalent to the <paramref name="index"/>.</returns>
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Index ToIndex<T>(this Index<T> index) where T : unmanaged, IComparable, IConvertible
         {
             return new(index.Value.Convert<int, T>(), index.IsFromEnd);
