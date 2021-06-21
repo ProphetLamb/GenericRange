@@ -21,8 +21,8 @@ namespace GenericRange.Tests
             HelloWorld = "Hello World";
             HelloRange = new Range(0, 5);
             WorldRange = new Range(^5, ^0);
-            HelloIntRange = HelloRange;
-            WorldIntRange = WorldRange;
+            HelloIntRange = (Range<int>)HelloRange;
+            WorldIntRange = (Range<int>)WorldRange;
         }
         
         
