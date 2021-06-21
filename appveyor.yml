@@ -12,8 +12,6 @@ os: Visual Studio 2019
 
 init:
   - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
-  - choco install opencover.portable
-  - choco install codecov
 
 platform: Any CPU
 
@@ -23,14 +21,20 @@ configuration:
 before_build:
   - dotnet restore
   - nuget restore
+  - choco install opencover.portable
+  - choco install codecov
 
-build:
-  parallel: true
-  project: GenericRange.sln
-  verbosity: minimal
+build_script:
+  - dotnet build "src/" --no-dependencies --version-suffix %LABEL%
+  - dotnet build "tests/" --no-dependencies --version-suffix %LABEL%
+
+after_build:
+  - dotnet pack "src/" --no-build --version-suffix %LABEL% -o artifacts
+  - dotnet pack "tests/" --no-build --version-suffix %LABEL% -o artifacts
+  - dotnet publish "src/" --no-build --version-suffix %LABEL% -o artifacts\publish
 
 test_script:
-  - dotnet test "tests/" --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - dotnet test "tests/" --no-build --no-restore --test-adapter-path:. --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   - codecov -f "tests/coverage.opencover.xml"
 
 artifacts:
