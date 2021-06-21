@@ -8,7 +8,7 @@ cache:
 environment:
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-os: Ubuntu
+os: Visual Studio 2019
 
 init:
   - ps: $Env:LABEL = "CI" + $Env:APPVEYOR_BUILD_NUMBER.PadLeft(5, "0")
@@ -28,5 +28,9 @@ build:
   parallel: true
   project: GenericRange.sln
 
-test:
-  
+test_script:
+  - dotnet test "test/" -c %CONFIGURATION% --no-build --no-restore --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - codecov -f "test/coverage.opencover.xml"
+
+artifacts:
+  - path: test\coverage*.xml
