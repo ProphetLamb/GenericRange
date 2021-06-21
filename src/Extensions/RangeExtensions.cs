@@ -27,7 +27,7 @@ namespace GenericRange.Extensions
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Index ToIndex<T>(this Index<T> index) where T : unmanaged, IComparable, IConvertible
         {
-            return new(index.Value.Convert<int, T>(), index.IsFromEnd);
+            return new(index.Value.Convert<T, int>(), index.IsFromEnd);
         }
     }
 }
