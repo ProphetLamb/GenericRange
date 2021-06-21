@@ -1,6 +1,7 @@
 # Generic Range
 
 [![NuGet](https://img.shields.io/nuget/v/GenericRange)](https://www.nuget.org/packages/GenericRange/)
+[![AppVeyor](https://ci.appveyor.com/api/projects/status/dynvdf82fvjsja7u/branch/master?svg=true)](https://ci.appveyor.com/project/ProphetLamb/genericrange/branch/master)
 
 ## Motivation
 

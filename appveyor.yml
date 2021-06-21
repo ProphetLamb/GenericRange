@@ -39,3 +39,4 @@ test_script:
 
 artifacts:
   - path: tests\coverage*.xml
+  - path: artifacts\**\*.*
