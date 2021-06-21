@@ -29,5 +29,12 @@ namespace GenericRange.Tests
             
             Assert.AreEqual(Foo.All, mask);
         }
+
+        [Test]
+        public void TestCast()
+        {
+            Range range = 0..^1;
+            Assert.Throws<InvalidCastException>(() => _ = (Range<Foo>)range);
+        }
     }
 }
