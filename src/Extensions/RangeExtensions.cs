@@ -7,15 +7,21 @@ namespace GenericRange.Extensions
         /// <summary>
         /// Converts the generic range to a integer <see cref="Range"/>.
         /// </summary>
-        /// <param name="range">The range</param>
+        /// <param name="range">The IConvertible range.</param>
         /// <returns>The <see cref="Range"/> equivalent to the <paramref name="range"/>.</returns>
-        public static Range ToRange(this Range<int> range) => new(range.Start.ToIndex(), range.End.ToIndex());
-        
+        public static Range ToRange<T>(this Range<T> range) where T : unmanaged, IComparable, IConvertible
+        {
+            return new(range.Start.ToIndex(), range.End.ToIndex());
+        }
+
         /// <summary>
         /// Converts the generic index to a integer <see cref="Index"/>.
         /// </summary>
-        /// <param name="index">The index.</param>
+        /// <param name="index">The IConvertible index.</param>
         /// <returns>The <see cref="Index"/> equivalent to the <paramref name="index"/>.</returns>
-        public static Index ToIndex(this Index<int> index) => new(index.Value, index.IsFromEnd);
+        public static Index ToIndex<T>(this Index<T> index) where T : unmanaged, IComparable, IConvertible
+        {
+            return new(index.Value.Convert<int, T>(), index.IsFromEnd);
+        }
     }
 }
