@@ -69,7 +69,7 @@ namespace GenericRange
 
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Index<T> other) => s_comparer.Compare(Value, other.Value) == 0 && IsFromEnd == other.IsFromEnd;
+        public bool Equals(Index<T> other) => Compare(Value, other.Value) == 0 && IsFromEnd == other.IsFromEnd;
         
         /// <summary>Indicates whether the <see cref="Index{T}"/> points to the same element in a set.</summary>
         /// <param name="other">An object to compare with this object.</param>
@@ -100,7 +100,7 @@ namespace GenericRange
         public int CompareTo(Index<T> other)
         {
             Debug.Assert(IsFromEnd == other.IsFromEnd, "IsFromEnd == other.IsFromEnd");
-            return s_comparer.Compare(Value, other.Value);
+            return Compare(Value, other.Value);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace GenericRange
         /// </returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public int CompareTo(in Index<T> other, in T length) => s_comparer.Compare(GetOffset(length), other.GetOffset(length));
+        public int CompareTo(in Index<T> other, in T length) => Compare(GetOffset(length), other.GetOffset(length));
 
         /// <summary>Returns the <see cref="Index{T}"/> that points to the element with the lower index of two indices.</summary>
         /// <param name="left">The first index.</param>
@@ -130,6 +130,7 @@ namespace GenericRange
         /// <param name="left">The first index.</param>
         /// <param name="right">The second index.</param>
         /// <returns>The smaller <see cref="Index{T}"/>.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Index<T> Min(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? left : right;
@@ -146,6 +147,7 @@ namespace GenericRange
         /// <param name="left">The first index.</param>
         /// <param name="right">The second index.</param>
         /// <returns>The greater <see cref="Index{T}"/>.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         public static Index<T> Max(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? right : left;
 

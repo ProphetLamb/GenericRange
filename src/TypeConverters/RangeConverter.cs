@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
+using GenericRange.Utility;
+
 namespace GenericRange.TypeConverters
 {
     public sealed partial class RangeConverter<T> : JsonConverter<Range<T>> where T : unmanaged, IComparable

@@ -26,6 +26,7 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static decimal Interpolate(this Range<decimal> range, decimal percentage)
@@ -55,6 +56,7 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<double> range, double percentage)
@@ -83,6 +85,7 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Interpolate(this Range<float> range, float percentage)
@@ -111,6 +114,7 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<int> range, double percentage)
@@ -139,6 +143,7 @@ namespace GenericRange.Extensions
         /// <param name="range">The range.</param>
         /// <param name="percentage">The percentage to interpolate with, 0.00 returns <see cref="Range.Start"/>, and 1.00 returns <see cref="Range.End"/>.</param>
         /// <returns>The interpolated value.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Interpolate(this Range<long> range, double percentage)

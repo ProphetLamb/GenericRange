@@ -14,11 +14,12 @@ namespace GenericRange.TypeConverters
     internal static class JsonHelper
     {
         private static readonly Lazy<Regex> s_rangeFormat = new (new Regex("^(\\^?.*)\\.{2}(\\^?.*)$", RegexOptions.Compiled));
+        private static readonly Lazy<JsonSerializerOptions> s_defaultOptions = new(new JsonSerializerOptions { WriteIndented = false });
 
         internal static Regex RangeFormat => s_rangeFormat.Value!;
 
-        internal static JsonSerializerOptions DefaultOptions = new() { WriteIndented = false };
-        
+        internal static JsonSerializerOptions DefaultOptions => s_defaultOptions.Value!;
+
         private static Utf8JsonReader ReadString(ReadOnlySpan<char> json)
         {
             Span<byte> bytes = new byte[Encoding.UTF8.GetByteCount(json)];

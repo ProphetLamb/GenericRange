@@ -30,6 +30,7 @@ namespace GenericRange.Extensions
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
         /// </remarks>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static decimal PercentageOf(this Range<decimal> range, in Index<decimal> value)
@@ -63,6 +64,7 @@ namespace GenericRange.Extensions
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
         /// </remarks>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double PercentageOf(this Range<double> range, in Index<double> value)
@@ -96,6 +98,7 @@ namespace GenericRange.Extensions
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
         /// </remarks>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float PercentageOf(this Range<float> range, in Index<float> value)
@@ -129,6 +132,7 @@ namespace GenericRange.Extensions
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
         /// </remarks>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double PercentageOf(this Range<long> range, in Index<long> value)
@@ -162,6 +166,7 @@ namespace GenericRange.Extensions
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
         /// </remarks>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double PercentageOf(this Range<int> range, in Index<int> value)

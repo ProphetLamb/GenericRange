@@ -81,9 +81,10 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(in Index<T> value, in T length) => Start.CompareTo(value, length) <= 0 && End.CompareTo(value, length) >= 0;
         
-        /// <summary>Indicates whether a specified value is within the range. Disallows indices from end in favour of performance.</summary>
+        /// <summary>Indicates whether a specified value is within the range.</summary>
         /// <param name="value">The value to seek.</param>
         /// <returns><see langword="true"/> if the <paramref name="value"/> is within the range, otherwise; <see langword="false"/>.</returns>
+        /// <remarks>Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(in Index<T> value)
@@ -105,9 +106,10 @@ namespace GenericRange
                 && Start.CompareTo(other.End, length) <= 0 && End.CompareTo(other.End, length) >= 0;
         }
         
-        /// <summary>Indicates whether a <see cref="Range{T}"/> is completely contained within the range. Disallows indices from end in favour of performance.</summary>
+        /// <summary>Indicates whether a <see cref="Range{T}"/> is completely contained within the range.</summary>
         /// <param name="other">The other range.</param>
         /// <returns><see langword="true"/> if the <paramref name="other"/> range completely contained within the range, otherwise; <see langword="false"/>.</returns>
+        /// <remarks>Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Encompasses(in Range<T> other)
@@ -129,9 +131,10 @@ namespace GenericRange
             return Start.CompareTo(other.End, length) <= 0 && End.CompareTo(other.Start, length) >= 0;
         }
         
-        /// <summary>Indicates whether a <see cref="Range{T}"/> is intersects with the range. Disallows indices from end in favour of performance.</summary>
+        /// <summary>Indicates whether a <see cref="Range{T}"/> is intersects with the range.</summary>
         /// <param name="other">The other range.</param>
         /// <returns><see langword="true"/> if the <paramref name="other"/> range intersects with the range, otherwise; <see langword="false"/>.</returns>
+        /// <remarks>Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Intersects(in Range<T> other)
@@ -155,8 +158,9 @@ namespace GenericRange
             return (start, Index<T>.Subtract(end, start));
         }
         
-        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a set length. Disallows indices from end in favour of performance.</summary>
+        /// <summary>Returns the start offset and length of the <see cref="Range{T}"/> object using a set length.</summary>
         /// <returns>The start offset and length of the range.</returns>
+        /// <remarks>Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public (T Offset, T Length) GetOffsetAndLength()
@@ -185,7 +189,11 @@ namespace GenericRange
         /// <summary>Returns the continuous union with an<paramref name="other"/> range in an arbitrary set.</summary>
         /// <param name="other">The range to unify with.</param>
         /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
-        /// <remarks>Same as <see cref="Span(Range{T})"/> but requires the union to be continues.</remarks>
+        /// <remarks>
+        ///     Same as <see cref="Span(Range{T})"/> but requires the union to be continues.
+        ///     <br/>
+        ///     Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.
+        /// </remarks>
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -212,6 +220,7 @@ namespace GenericRange
         /// <summary>Returns the expanded-union with an<paramref name="other"/> range in an arbitrary set.</summary>
         /// <param name="other">The range to unify with.</param>
         /// <returns>The expanded-union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
+        /// <remarks>Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Range<T> Span(in Range<T> other)
@@ -240,6 +249,7 @@ namespace GenericRange
         /// <param name="other">The range to unify with.</param>
         /// <returns>The intersection between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><c>!this.Intersects(other, length)</c></exception>
+        /// <remarks>Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         public Range<T> Clamp(in Range<T> other)
         {

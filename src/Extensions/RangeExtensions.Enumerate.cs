@@ -20,6 +20,7 @@ namespace GenericRange.Extensions
         /// <summary>Enumerates all integers in the <see cref="Range{T}"/>, from start inclusive and end inclusive.</summary>
         /// <param name="range">The range.</param>
         /// <param name="length">The length.</param>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         public static IEnumerable<long> Enumerate(this Range<long> range)
         {
@@ -41,6 +42,7 @@ namespace GenericRange.Extensions
         
         /// <summary>Enumerates all integers in the <see cref="Range{T}"/>, from start inclusive and end inclusive.</summary>
         /// <param name="range">The range.</param>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         public static IEnumerable<int> Enumerate(this Range<int> range)
         {

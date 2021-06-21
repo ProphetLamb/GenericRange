@@ -12,6 +12,9 @@ namespace GenericRange
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static T Subtract(in T minuend, in T subtrahend) => s_subtract(minuend, subtrahend).Cast<T>();
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static int Compare(in T left, in T right) => s_comparer.Compare(left, right);
     }
 
     internal static class RangeHelper
@@ -24,6 +27,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static TOut Convert<TOut, TIn>(this TIn obj)
             where TIn : unmanaged, IConvertible
+            where TOut : unmanaged
         {
             return (TOut)System.Convert.ChangeType(obj, typeof(TOut));
         }

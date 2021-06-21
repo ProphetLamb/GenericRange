@@ -29,6 +29,7 @@ namespace GenericRange.Extensions
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
         /// <param name="value">The value.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static decimal Map(this Range<decimal> source, in Range<decimal> target, in Index<decimal> value)
@@ -59,6 +60,7 @@ namespace GenericRange.Extensions
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
         /// <param name="value">The value.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static double Map(this Range<double> source, in Range<double> target, in Index<double> value)
@@ -89,6 +91,7 @@ namespace GenericRange.Extensions
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
         /// <param name="value">The value.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Map(this Range<float> source, in Range<float> target, in Index<float> value)
@@ -119,6 +122,7 @@ namespace GenericRange.Extensions
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
         /// <param name="value">The value.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Map(this Range<long> source, in Range<long> target, in Index<long> value)
@@ -151,6 +155,7 @@ namespace GenericRange.Extensions
         /// <param name="value">The value.</param>
         /// <param name="rounding">Rounding mode.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long Map(this Range<long> source, in Range<long> target, in Index<long> value, MidpointRounding rounding)
@@ -181,6 +186,7 @@ namespace GenericRange.Extensions
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
         /// <param name="value">The value.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Map(this Range<int> source, in Range<int> target, in Index<int> value)
@@ -213,6 +219,7 @@ namespace GenericRange.Extensions
         /// <param name="value">The value.</param>
         /// <param name="rounding">Rounding mode.</param>
         /// <returns>The <paramref name="value"/> mapped to the <paramref name="target"/> range.</returns>
+        /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Map(this Range<int> source, in Range<int> target, in Index<int> value, MidpointRounding rounding)
