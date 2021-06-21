@@ -62,11 +62,11 @@ namespace GenericRange
 
         public override string ToString()
         {
-            ValueStringBuilder sb = new(stackalloc char[16]);
+            ValueStringBuilder vsb = new(stackalloc char[32]);
             if (IsFromEnd)
-                sb.Append('^');
-            sb.Append(Value.ToString());
-            return sb.ToString();
+                vsb.Append('^');
+            vsb.Append(Value.ToString());
+            return vsb.ToString();
         }
 
         [Pure]
@@ -79,7 +79,7 @@ namespace GenericRange
         /// <returns><see langword="true"/> if the current object is equal to the other parameter; otherwise, <see langword="false"/>.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool Equals(Index<T> other, T length) => CompareTo(other, length) == 0;
+        public bool Equals(in Index<T> other, in T length) => CompareTo(other, length) == 0;
 
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -126,7 +126,7 @@ namespace GenericRange
         /// <returns>The smaller <see cref="Index{T}"/>.</returns>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Index<T> Min(in Index<T> left, in Index<T> right, T length) => left.CompareTo(right, length) < 0 ? left : right;
+        public static Index<T> Min(in Index<T> left, in Index<T> right, in T length) => left.CompareTo(right, length) < 0 ? left : right;
 
         /// <summary>Returns the smaller of the two indices.</summary>
         /// <param name="left">The first index.</param>
@@ -143,7 +143,8 @@ namespace GenericRange
         /// <param name="length">The length of the set.</param>
         /// <returns>The greater <see cref="Index{T}"/>.</returns>
         [Pure]
-        public static Index<T> Max(in Index<T> left, in Index<T> right, T length) => left.CompareTo(right, length) < 0 ? right : left;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Index<T> Max(in Index<T> left, in Index<T> right, in T length) => left.CompareTo(right, length) < 0 ? right : left;
         
         /// <summary>Returns the greater of the two indices.</summary>
         /// <param name="left">The first index.</param>
@@ -151,6 +152,7 @@ namespace GenericRange
         /// <returns>The greater <see cref="Index{T}"/>.</returns>
         /// <remarks>Disallows <see cref="Index{T}.IsFromEnd"/> in favour of performance.</remarks>
         [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Index<T> Max(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? right : left;
 
 #endregion
@@ -158,6 +160,7 @@ namespace GenericRange
 #region InternalMembers
 
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         internal void AssertNotFromEnd()
         {
             Debug.Assert(!IsFromEnd, "!index.IsFromEnd");

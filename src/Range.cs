@@ -307,6 +307,7 @@ namespace GenericRange
 #region Internal members
         
         [Conditional("DEBUG")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         internal void AssertNotFromEnd()
         {
             Start.AssertNotFromEnd();
