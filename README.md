@@ -38,7 +38,7 @@ Type | Comment
 Install the [NuGet package](https://www.nuget.org/packages/GenericRange/)
 
 ```ps
-dotnet add package GenericRange --version latest
+dotnet add package GenericRange
 ```
 
 ## `System.Range` compatibility
