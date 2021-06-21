@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
+using GenericRange.Utility;
+
 namespace GenericRange
 {
     /// <summary>Represents a type that can be used to index a collection either from the start or the end.</summary>

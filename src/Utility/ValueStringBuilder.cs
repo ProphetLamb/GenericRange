@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace GenericRange
+namespace GenericRange.Utility
 {
     // Source: https://source.dot.net/System.Private.CoreLib/ValueStringBuilder.cs.html
     [DebuggerDisplay("{GetDebuggerDisplay(),nq}")]

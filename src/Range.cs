@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
+using GenericRange.Utility;
+
 namespace GenericRange
 {
     /// <summary>Represents a range that has start and end indices.</summary>
