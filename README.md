@@ -129,4 +129,4 @@ In any edge cases; its generally safer to pick the overload with length.
 
 ## For a more detained documentation
 
-Read the [auto-generated](https://github.com/lijunle/Vsxmd) doc file [here](./src/doc.md).
+Read the [auto-generated](https://github.com/lijunle/Vsxmd) doc file [here](./src/GenericRange.md).

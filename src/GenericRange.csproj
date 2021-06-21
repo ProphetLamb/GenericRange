@@ -27,8 +27,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>$(MSBuildProjectDirectory)\doc.xml</DocumentationFile>
-    <DocumentationMarkdown>$(MSBuildProjectDirectory)\doc.md</DocumentationMarkdown>
+    <DocumentationFile>$(MSBuildProjectDirectory)\$(MSBuildProjectName).xml</DocumentationFile>
+    <DocumentationMarkdown>$(MSBuildProjectDirectory)\$(MSBuildProjectName).md</DocumentationMarkdown>
     <VsxmdAutoDeleteXml>True</VsxmdAutoDeleteXml>
   </PropertyGroup>
     
