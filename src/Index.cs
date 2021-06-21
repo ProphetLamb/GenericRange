@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
-using GenericRange.Utility;
+using GenericRange.TypeConverters;
 
 namespace GenericRange
 {
@@ -60,14 +60,7 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T GetOffset(in T length) => IsFromEnd ? Subtract(length, Value) : Value;
 
-        public override string ToString()
-        {
-            ValueStringBuilder vsb = new(stackalloc char[32]);
-            if (IsFromEnd)
-                vsb.Append('^');
-            vsb.Append(Value.ToString());
-            return vsb.ToString();
-        }
+        public override string ToString() => IndexConverter<T>.ToString(this);
 
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -118,6 +111,17 @@ namespace GenericRange
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(in Index<T> other, in T length) => Compare(GetOffset(length), other.GetOffset(length));
+        
+        /// <summary>Converts the <see cref="Value"/> to the specified type.</summary>
+        /// <typeparam name="TOut">The type to convert to.</typeparam>
+        /// <returns>A new <see cref="Index{TOut}"/> of the desired type.</returns>
+        /// <exception cref="InvalidCastException">This conversion is not supported. -or- value is null and conversionType is a value type. -or- value does not implement the IConvertible interface.</exception>
+        /// <remarks>Uses <see cref="Convert.ChangeType(object, Type)"/>, but the generic constraints do not ensure that the Types are IConvertible use at own discretion.</remarks>
+        public Index<TOut> ToIndex<TOut>()
+            where TOut: unmanaged, IComparable, IConvertible
+        {
+            return new(Value.Convert<T, TOut>(), IsFromEnd);
+        }
 
         /// <summary>Returns the <see cref="Index{T}"/> that points to the element with the lower index of two indices.</summary>
         /// <param name="left">The first index.</param>
@@ -155,6 +159,8 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Index<T> Max(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? right : left;
 
+        public static Index<T> Parse(ReadOnlySpan<char> serialized) => IndexConverter<T>.Parse(serialized);
+
 #endregion
 
 #region InternalMembers
@@ -189,7 +195,7 @@ namespace GenericRange
         /// <summary>Uses <see cref="Convert.ChangeType(object, Type)"/> to convert the indexx to the specific generic type.</summary>
         /// <remarks>Warning: does not work for not <see cref="IConvertible"/>'s such as <see cref="Enum"/> types.</remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Index<T>(in Index index) => new(index.Value.Convert<T, int>(), index.IsFromEnd);
+        public static explicit operator Index<T>(in Index index) => new(index.Value.Convert<int, T>(), index.IsFromEnd);
 
 #endregion
     }

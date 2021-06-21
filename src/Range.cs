@@ -3,7 +3,9 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
+using GenericRange.TypeConverters;
 using GenericRange.Utility;
 
 namespace GenericRange
@@ -177,7 +179,7 @@ namespace GenericRange
         /// <param name="other">The range to unify with.</param>
         /// <param name="length">The length of the set.</param>
         /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
-        /// <remarks>Same as <see cref="Span(Range{T}, T)"/> but requires the union to be continues.</remarks>
+        /// <remarks>Same as <see cref="Span{T}"/> but requires the union to be continues.</remarks>
         /// <exception cref="ArgumentOutOfRangeException">The <see cref="Start"/> of the <paramref name="other"/> range is greather then the <see cref="End"/> of the range.</exception>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -192,7 +194,7 @@ namespace GenericRange
         /// <param name="other">The range to unify with.</param>
         /// <returns>The continuous union between <see langword="this"/> and the <paramref name="other"/> <see cref="Range{T}"/>.</returns>
         /// <remarks>
-        ///     Same as <see cref="Span(Range{T})"/> but requires the union to be continues.
+        ///     Same as <see cref="Span{T}"/> but requires the union to be continues.
         ///     <br/>
         ///     Disallows indices <see cref="Index{T}.IsFromEnd"/> in favour of performance.
         /// </remarks>
@@ -272,17 +274,8 @@ namespace GenericRange
         /// <param name="startIndex">The end-index.</param>
         public Range<T> GetRightPart(in Index<T> startIndex) => new(startIndex, End);
 
-        public override string ToString()
-        {
-            ValueStringBuilder vsb = new(stackalloc char[32]);
-            if (Start.IsFromEnd)
-                vsb.Append('^');
-            vsb.Append(Start.Value.ToString());
-            vsb.Append(End.IsFromEnd ? "..^" : "..");
-            vsb.Append(End.Value.ToString());
-            return vsb.ToString();
-        }
-        
+        public override string ToString() => RangeConverter<T>.ToString(this);
+
         /// <summary>Indicates whether the indices inside a set of a specific <paramref name="length"/> of the <see cref="Range{T}"/> are equal to another.</summary>
         /// <param name="other">The other <see cref="Range{T}"/>.</param>
         /// <param name="length">The length of the set.</param>
@@ -302,6 +295,19 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => HashCode.Combine(Start, End);
         
+        /// <summary>Converts the <see cref="Value"/> to the specified type.</summary>
+        /// <typeparam name="TOut">The type to convert to.</typeparam>
+        /// <returns>A new <see cref="Range{TOut}"/> of the desired type.</returns>
+        /// <exception cref="InvalidCastException">This conversion is not supported. -or- value is null and conversionType is a value type. -or- value does not implement the IConvertible interface.</exception>
+        /// <remarks>Uses <see cref="Convert.ChangeType(object, Type)"/>, but the generic constraints do not ensure that the Types are IConvertible use at own discretion.</remarks>
+        public Range<TOut> ToRange<TOut>()
+            where TOut: unmanaged, IComparable, IConvertible
+        {
+            return new(Start.ToIndex<TOut>(), End.ToIndex<TOut>());
+        }
+        
+        public static Range<T> Parse(string serialized) => RangeConverter<T>.Parse(serialized);
+
 #endregion
 
 #region Internal members
