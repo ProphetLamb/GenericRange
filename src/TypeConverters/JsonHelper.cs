@@ -20,16 +20,11 @@ namespace GenericRange.TypeConverters
 
         internal static JsonSerializerOptions DefaultOptions => s_defaultOptions.Value!;
 
-        private static Utf8JsonReader ReadString(ReadOnlySpan<char> json)
-        {
-            Span<byte> bytes = new byte[Encoding.UTF8.GetByteCount(json)];
-            Encoding.UTF8.GetBytes(json, bytes);
-            return new Utf8JsonReader(bytes);
-        }
-
         internal static T ParseElement<T>(this JsonConverter<T> converter, ReadOnlySpan<char> json, JsonSerializerOptions options)
         {
-            Utf8JsonReader reader = ReadString(json);
+            Span<byte> bytes = stackalloc byte[Encoding.UTF8.GetByteCount(json)];
+            Encoding.UTF8.GetBytes(json, bytes);
+            Utf8JsonReader reader = new(bytes);
             T? value = converter.Read(ref reader, typeof(T), options);
             return value!;
         }
@@ -42,7 +37,7 @@ namespace GenericRange.TypeConverters
         internal static Utf8JsonWriter WriteBuffer(byte[] buffer)
         {
             using MemoryStream stream = new(buffer);
-            return new(stream);
+            return new Utf8JsonWriter(stream);
         }
     }
 }

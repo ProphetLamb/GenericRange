@@ -3,7 +3,6 @@ using System.Text.Json;
 
 namespace GenericRange.TypeConverters
 {
-
     public sealed partial class RangeConverter<T>
     {
         public override Range<T> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => Parse(reader.GetString()!, options);

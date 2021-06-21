@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
@@ -19,10 +20,13 @@ namespace GenericRange.TypeConverters
 
         public static RangeConverter<T> Default => s_default.Value;
 
-        public static Range<T> Parse(string serialized, JsonSerializerOptions? options = default)
-        {
-            options ??= JsonHelper.DefaultOptions;
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Range<T> Parse(string serialized) => Parse(serialized, JsonHelper.DefaultOptions);
 
+        [Pure]
+        public static Range<T> Parse(string serialized, JsonSerializerOptions options)
+        {
             Match match = JsonHelper.RangeFormat.Match(serialized);
             if (!match.Success)
                 throw new FormatException("String is in a invalid Format. Expected [^]{start}..[^]{end}");
@@ -40,20 +44,23 @@ namespace GenericRange.TypeConverters
             return new Range<T>(startValue, startFromEnd, endValue, endFromEnd);
         }
 
-        public static string ToString(Range<T> range, JsonSerializerOptions? options = default)
-        {
-            options ??= JsonHelper.DefaultOptions;
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string ToString(in Range<T> range) => ToString(range, JsonHelper.DefaultOptions);
 
+        [Pure]
+        public static string ToString(in Range<T> range, JsonSerializerOptions options)
+        {
             string startValue = IndexConverter<T>.SerializeIndexValue(range.Start.Value, options);
             string endValue = IndexConverter<T>.SerializeIndexValue(range.End.Value, options);
 
-            ValueStringBuilder sb = new(stackalloc char[startValue.Length + endValue.Length + 4]);
+            ValueStringBuilder vsb = new(stackalloc char[32]);
             if (range.Start.IsFromEnd)
-                sb.Append('^');
-            sb.Append(startValue);
-            sb.Append(range.End.IsFromEnd ? "..^" : "..");
-            sb.Append(endValue);
-            return sb.ToString();
+                vsb.Append('^');
+            vsb.Append(startValue);
+            vsb.Append(range.End.IsFromEnd ? "..^" : "..");
+            vsb.Append(endValue);
+            return vsb.ToString();
         }
     }
 }

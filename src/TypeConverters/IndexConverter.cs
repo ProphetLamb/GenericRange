@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Buffers;
+using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -17,26 +19,33 @@ namespace GenericRange.TypeConverters
 
         public static IndexConverter<T> Default => s_default.Value;
 
-        public static Index<T> Parse(string serialized, JsonSerializerOptions? options = default)
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Index<T> Parse(string serialized) => Parse(serialized, JsonHelper.DefaultOptions);
+
+        [Pure]
+        public static Index<T> Parse(string serialized, JsonSerializerOptions options)
         {
-            options ??= JsonHelper.DefaultOptions;
-            
             bool fromEnd = serialized[0] == '^';
             T value = options.GetConverter<T>().ParseElement(serialized.AsSpan(fromEnd ? 1 : 0), options);
             return new Index<T>(value, fromEnd);
         }
 
-        public static string ToString(Index<T> index, JsonSerializerOptions? options = default)
+        [Pure]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string ToString(in Index<T> index) => ToString(index, JsonHelper.DefaultOptions);
+        
+        [Pure]
+        public static string ToString(in Index<T> index, JsonSerializerOptions options)
         {
-            options ??= JsonHelper.DefaultOptions;
-            
             string json = SerializeIndexValue(index.Value, options);
             return index.IsFromEnd ? '^' + json : json;
         }
 
+        [Pure]
         internal static string SerializeIndexValue(T value, JsonSerializerOptions options)
         {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(1024); // Allocate 1kb in the pool just to be sure we can serialize even the longest value :)
+            byte[] buffer = ArrayPool<byte>.Shared.Rent(4096); // Lets just rent 1 page so we dont get a buffer-overflow
             ReadOnlySpan<byte> utf8;
             using (Utf8JsonWriter valueWriter = JsonHelper.WriteBuffer(buffer))
             {
