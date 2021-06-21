@@ -30,7 +30,7 @@ build:
   verbosity: minimal
 
 test_script:
-  - dotnet test "tests/" -c %CONFIGURATION% --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+  - dotnet test "tests/" --logger:"Appveyor" /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
   - codecov -f "tests/coverage.opencover.xml"
 
 artifacts:
