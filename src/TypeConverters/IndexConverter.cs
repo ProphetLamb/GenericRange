@@ -1,61 +1,64 @@
 ﻿using System;
-using System.Buffers;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+
+using GenericRange.Utility;
 
 namespace GenericRange.TypeConverters
 {
-    public sealed partial class IndexConverter<T> : JsonConverter<Index<T>> where T : unmanaged, IComparable
+    /*
+     * Allowed generic types are exclusively primitives or Enums, that are serialized as string values or numerics, not json objects.
+     * Therefore there is not need to serialize the range in any other way, especially since we have a nice shorthand for indices [^]{value} and ranges [^]{start}..[^]{end}.
+     */
+    public sealed partial class IndexConverter<T> : DefaultConverterFactory<Index<T>> where T : unmanaged, IComparable
     {
-        private static readonly Lazy<IndexConverter<T>> s_default = new(() => new IndexConverter<T>());
+        internal static bool IsEnumUnderlying { get; } = typeof(T).IsEnum;
+
+        internal static bool IsTimeSpanUnderlying { get; } = typeof(T) == typeof(TimeSpan);
+        
+        internal static JsonSerializerOptions DefaultOptions { get; } = IsEnumUnderlying ? JsonHelper.EnumOptions : JsonHelper.DefaultOptions;
         
         static IndexConverter()
         {
             _ = new Index<T>(); // Throws type initializer error if invalid generic type.
         }
 
-        public static IndexConverter<T> Default => s_default.Value;
-
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Index<T> Parse(string serialized) => Parse(serialized, JsonHelper.DefaultOptions);
+        public static Index<T> Parse(ReadOnlySpan<char> serialized) => Parse(serialized, DefaultOptions);
 
         [Pure]
-        public static Index<T> Parse(string serialized, JsonSerializerOptions options)
+        public static Index<T> Parse(ReadOnlySpan<char> serialized, JsonSerializerOptions options)
         {
             bool fromEnd = serialized[0] == '^';
-            T value = options.GetConverter<T>().ParseElement(serialized.AsSpan(fromEnd ? 1 : 0), options);
-            return new Index<T>(value, fromEnd);
+            if (fromEnd)
+                serialized = serialized.Slice(fromEnd ? 1 : 0);
+            if (IsTimeSpanUnderlying)
+                return new Index<T>(new TimeSpan(options.Deserialize<long>(serialized)).Cast<T>(), fromEnd);
+            if (IsEnumUnderlying)
+                return new Index<T>(options.Deserialize<T>(serialized.Quote(stackalloc char[serialized.Length + 2])), fromEnd);
+            return new Index<T>(options.Deserialize<T>(serialized), fromEnd);
         }
 
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string ToString(in Index<T> index) => ToString(index, JsonHelper.DefaultOptions);
+        public static string ToString(in Index<T> index) => ToString(index, DefaultOptions);
         
         [Pure]
         public static string ToString(in Index<T> index, JsonSerializerOptions options)
         {
-            string json = SerializeIndexValue(index.Value, options);
-            return index.IsFromEnd ? '^' + json : json;
-        }
-
-        [Pure]
-        internal static string SerializeIndexValue(T value, JsonSerializerOptions options)
-        {
-            byte[] buffer = ArrayPool<byte>.Shared.Rent(4096); // Lets just rent 1 page so we dont get a buffer-overflow
-            ReadOnlySpan<byte> utf8;
-            using (Utf8JsonWriter valueWriter = JsonHelper.WriteBuffer(buffer))
-            {
-                options.GetConverter<T>().Write(valueWriter, value, options);
-                valueWriter.Flush();
-                utf8 = buffer.AsSpan(0, (int)valueWriter.BytesCommitted);
-            }
-            string serialized = Encoding.UTF8.GetString(utf8);
-            ArrayPool<byte>.Shared.Return(buffer);
-            return serialized;
+            ReadOnlySpan<char> json;
+            if (IsTimeSpanUnderlying)
+                json = JsonSerializer.Serialize(index.Value.Cast<TimeSpan>().Ticks, options);
+            else if (IsEnumUnderlying)
+                json = JsonSerializer.Serialize(index.Value, options).AsSpan()[1..^1];
+            else
+                json = JsonSerializer.Serialize(index.Value, options);
+            
+            if (index.IsFromEnd)
+                return "^" + json.ToString();
+            return json.ToString();
         }
     }
 }

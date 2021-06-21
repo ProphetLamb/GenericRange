@@ -18,13 +18,13 @@ namespace GenericRange.TypeConverters
 
         public override object? ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            return value is string serialized ? RangeConverter<T>.Parse(serialized) : base.ConvertFrom(context, culture, value);
+            return value is string serialized ? Range<T>.Parse(serialized) : base.ConvertFrom(context, culture, value);
         }
 
         public override object? ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             var range = (Range<T>)value!;
-            return destinationType == typeof(string) ? RangeConverter<T>.ToString(range) : base.ConvertTo(context, culture, value, destinationType);
+            return destinationType == typeof(string) ? range.ToString() : base.ConvertTo(context, culture, value, destinationType);
         }
     }
 }
