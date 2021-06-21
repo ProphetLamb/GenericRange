@@ -2,7 +2,7 @@
 
 [![NuGet](https://img.shields.io/nuget/v/GenericRange)](https://www.nuget.org/packages/GenericRange/)
 [![AppVeyor](https://ci.appveyor.com/api/projects/status/dynvdf82fvjsja7u/branch/master?svg=true)](https://ci.appveyor.com/project/ProphetLamb/genericrange/branch/master)
-[![codecov](https://codecov.io/gh/ProphetLamb/GenericRange/branch/main/graph/badge.svg?token=2fsNMR53v5)](https://codecov.io/gh/ProphetLamb/GenericRange)
+[![Codecov](https://codecov.io/gh/ProphetLamb/GenericRange/branch/main/graph/badge.svg?token=2fsNMR53v5)](https://codecov.io/gh/ProphetLamb/GenericRange)
 
 ## Motivation
 
@@ -42,6 +42,8 @@ Install the [NuGet package](https://www.nuget.org/packages/GenericRange/)
 ```ps
 dotnet add package GenericRange
 ```
+
+---
 
 ## `System.Range` compatibility
 
@@ -113,6 +115,17 @@ public enum Foo : byte
     All = 255
 }
 ```
+
+In this enum the bit-flag with the highest bit is `Foo.Eight`, but the highest value is `Foo.All`. That mean that if we call `Mask` without a maximum of `Foo.Eight` the `maximum` wont be a bit-flag, but instead the bit-mask `Foo.All` which will break the algorithm.
+I could workaround this by masking the highest bit and thus filtering all masks from flags, but that would create a whole lot of different problems.
+
+For all `Enums` that are **not exclusively bit-flags use the `maximum` overload** to ensure the function returns the correct result.
+
+## `!Index<T>.IsFromEnd` overloads
+
+Almost all methods have an overload omitting the `length` argument required to resolve a index that `IsFromEnd`. Such methods `Debug.Assert` that all indices are `!IsFromEnd`.
+For most cases wether an index `IsFromEnd` is determined at compile-time, thats how I justify `Assert`ing instead of `throw`ing.
+In any edge cases; its generally safer to pick the overload with length.
 
 ## For a more detained documentation
 
