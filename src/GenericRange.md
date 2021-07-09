@@ -9,6 +9,8 @@
   - [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.IsFromEnd')
   - [Value](#P-GenericRange-Index`1-Value 'GenericRange.Index`1.Value')
   - [CompareTo(other,length)](#M-GenericRange-Index`1-CompareTo-GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.CompareTo(GenericRange.Index{`0}@,`0@)')
+  - [ConvertMarshaledValue\`\`1()](#M-GenericRange-Index`1-ConvertMarshaledValue``1-`0- 'GenericRange.Index`1.ConvertMarshaledValue``1(`0)')
+  - [ConvertMarshaledValue\`\`1()](#M-GenericRange-Index`1-ConvertMarshaledValue``1-``0- 'GenericRange.Index`1.ConvertMarshaledValue``1(``0)')
   - [Equals(other,length)](#M-GenericRange-Index`1-Equals-GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.Equals(GenericRange.Index{`0}@,`0@)')
   - [GetOffset(length)](#M-GenericRange-Index`1-GetOffset-`0@- 'GenericRange.Index`1.GetOffset(`0@)')
   - [Max(left,right,length)](#M-GenericRange-Index`1-Max-GenericRange-Index{`0}@,GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.Max(GenericRange.Index{`0}@,GenericRange.Index{`0}@,`0@)')
@@ -177,6 +179,28 @@ A value that indicates the relative order of the objects being compared. The ret
 | other | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | An object to compare with this instance. |
 | length | [\`0@](#T-`0@ '`0@') | The length of the set. |
 
+<a name='M-GenericRange-Index`1-ConvertMarshaledValue``1-`0-'></a>
+### ConvertMarshaledValue\`\`1() `method`
+
+##### Summary
+
+Ensure that T is TOut or IConvertible.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Index`1-ConvertMarshaledValue``1-``0-'></a>
+### ConvertMarshaledValue\`\`1() `method`
+
+##### Summary
+
+Ensure that T is TIn or IConvertible.
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-GenericRange-Index`1-Equals-GenericRange-Index{`0}@,`0@-'></a>
 ### Equals(other,length) `method`
 
@@ -330,15 +354,11 @@ Uses [ChangeType](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l
 
 ##### Summary
 
-Uses [ChangeType](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Convert.ChangeType 'System.Convert.ChangeType(System.Object,System.Type)') to convert the indexx to the specific generic type.
+Uses [ChangeType](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Convert.ChangeType 'System.Convert.ChangeType(System.Object,System.Type)') to convert the index to the specific generic type.
 
 ##### Parameters
 
 This method has no parameters.
-
-##### Remarks
-
-Warning: does not work for not [IConvertible](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IConvertible 'System.IConvertible')'s such as [Enum](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Enum 'System.Enum') types.
 
 <a name='T-GenericRange-Extensions-RangeExtensions'></a>
 ## RangeExtensions `type`

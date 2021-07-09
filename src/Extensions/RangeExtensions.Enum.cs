@@ -44,21 +44,25 @@ namespace GenericRange.Extensions
             return InternalMask(range, maximum, GetEnumValues<T>());
         }
 
-        private static long InternalMask<T>(Range<T> range, T maximum, T[] values) where T : unmanaged, Enum
+        private static unsafe long InternalMask<T>(Range<T> range, T maximum, T[] values) where T : unmanaged, Enum
         {
             T flag = range.Start.GetOffset(maximum);
             int index = Array.IndexOf(values, flag);
 
             Debug.Assert(index >= 0, "index >= 0");
 
-            long value = flag.Convert<T, int>();
+            // ConvertMarshaledValue handles the underlying type of the enum, so that we get either a byte, short, int, or long.
+            // For simplicities sake we cast to long because we wont overflow.  
+            long value = Index<T>.ConvertMarshaledValue<long>(flag);
             while (++index < values.Length)
             {
                 if (range.End.CompareTo(values[index], maximum) < 0)
                     break;
-                value |= values[index].Convert<T, long>();
+                value |= Index<T>.ConvertMarshaledValue<long>(values[index]);
             }
-
+            
+            // We can guarantee that the created mask is representable as a value of the enum, so we return the plain mask.
+            // We can do that because it doesnt impact the syntax / usage in most cases.
             return value;
         }
 

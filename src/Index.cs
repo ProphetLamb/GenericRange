@@ -120,7 +120,7 @@ namespace GenericRange
         public Index<TOut> ToIndex<TOut>()
             where TOut: unmanaged, IComparable, IConvertible
         {
-            return new(Value.Convert<T, TOut>(), IsFromEnd);
+            return new Index<TOut>(ConvertMarshaledValue<TOut>(Value), IsFromEnd);
         }
 
         /// <summary>Returns the <see cref="Index{T}"/> that points to the element with the lower index of two indices.</summary>
@@ -172,6 +172,88 @@ namespace GenericRange
             Debug.Assert(!IsFromEnd, "!index.IsFromEnd");
         }
         
+        /// <summary>
+        ///     Ensure that T is TOut or IConvertible.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe TOut ConvertMarshaledValue<TOut>(T value) where TOut : unmanaged
+        {
+            TOut retVal;
+
+            if (typeof(TOut) != typeof(T))
+            {
+                if (typeof(T) != typeof(TimeSpan))
+                {
+                    if (!typeof(T).IsEnum)
+                    {
+                        retVal = (TOut) Convert.ChangeType(value, typeof(TOut));
+                    }
+                    else
+                    {
+                        retVal = sizeof(T) switch
+                        {
+                            8 => (TOut) Convert.ChangeType(*(long*) &value, typeof(TOut)),
+                            4 => (TOut) Convert.ChangeType(*(int*) &value, typeof(TOut)),
+                            2 => (TOut) Convert.ChangeType(*(short*) &value, typeof(TOut)),
+                            1 => (TOut) Convert.ChangeType(*(byte*) &value, typeof(TOut)),
+                            _ => throw new NotSupportedException("Only enums with a width of 1, 2, 4, or 8 bytes a eligible.")
+                        };
+                    }
+                }
+                else
+                {
+                    retVal = (TOut) Convert.ChangeType((*(TimeSpan*) &value).Ticks, typeof(TOut));
+                }
+            }
+            else
+            {
+                retVal = *(TOut*) &value;
+            }
+
+            return retVal;
+        }
+        
+        /// <summary>
+        ///     Ensure that T is TIn or IConvertible.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static unsafe T ConvertMarshaledValue<TIn>(TIn value) where TIn : unmanaged
+        {
+            T retVal;
+
+            if (typeof(TIn) != typeof(T))
+            {
+                if (typeof(TIn) != typeof(TimeSpan))
+                {
+                    if (!typeof(TIn).IsEnum)
+                    {
+                        retVal = (T) Convert.ChangeType(value, typeof(T));
+                    }
+                    else
+                    {
+                        retVal = sizeof(TIn) switch
+                        {
+                            8 => (T) Convert.ChangeType(*(long*) &value, typeof(T)),
+                            4 => (T) Convert.ChangeType(*(int*) &value, typeof(T)),
+                            2 => (T) Convert.ChangeType(*(short*) &value, typeof(T)),
+                            1 => (T) Convert.ChangeType(*(byte*) &value, typeof(T)),
+                            _ => throw new NotSupportedException("Only enums with a width of 1, 2, 4, or 8 bytes a eligible.")
+                        };
+                    }
+                }
+                else
+                {
+                    retVal = (T) Convert.ChangeType((*(TimeSpan*) &value).Ticks, typeof(T));
+                }
+            }
+            else
+            {
+                retVal = *(T*) &value;
+            }
+
+            return retVal;
+        }
+        
 #endregion
         
 #region Operators
@@ -192,10 +274,9 @@ namespace GenericRange
             return index.Value;
         }
 
-        /// <summary>Uses <see cref="Convert.ChangeType(object, Type)"/> to convert the indexx to the specific generic type.</summary>
-        /// <remarks>Warning: does not work for not <see cref="IConvertible"/>'s such as <see cref="Enum"/> types.</remarks>
+        /// <summary>Uses <see cref="Convert.ChangeType(object, Type)"/> to convert the index to the specific generic type.</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Index<T>(in Index index) => new(index.Value.Convert<int, T>(), index.IsFromEnd);
+        public static explicit operator Index<T>(in Index index) => new(ConvertMarshaledValue(index.Value), index.IsFromEnd);
 
 #endregion
     }
