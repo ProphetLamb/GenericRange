@@ -16,7 +16,10 @@ namespace GenericRange
     /// </typeparam>
     [Serializable]
     [DebuggerDisplay("{ToString(),nq}")]
-    public readonly partial struct Index<T> : IEquatable<Index<T>>, IComparable, IComparable<Index<T>>
+    public readonly partial struct Index<T> :
+        IEquatable<Index<T>>,
+        IComparable,
+        IComparable<Index<T>>
         where T : unmanaged, IComparable
     {
 #region Ctor
@@ -59,9 +62,11 @@ namespace GenericRange
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public T GetOffset(in T length) => IsFromEnd ? Subtract(length, Value) : Value;
-
+        
+        /// <inheritdoc/>
         public override string ToString() => IndexConverter<T>.ToString(this);
 
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Index<T> other) => Compare(Value, other.Value) == 0 && IsFromEnd == other.IsFromEnd;
@@ -74,14 +79,17 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(in Index<T> other, in T length) => CompareTo(other, length) == 0;
 
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals([NotNullWhen(true)] object? obj) => obj is Index<T> other && Equals(other) || obj is T value && Equals(value);
         
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => HashCode.Combine(Value, IsFromEnd);
 
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(object? obj) => obj switch {
@@ -90,6 +98,7 @@ namespace GenericRange
             _ => throw new ArgumentException("Allowed types for the value is Index<T> or T.", nameof(obj))
         };
 
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(Index<T> other)
@@ -159,6 +168,9 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Index<T> Max(in Index<T> left, in Index<T> right) => left.CompareTo(right) < 0 ? right : left;
 
+        /// <summary>Parses the string to a index.</summary>
+        /// <param name="serialized">The string to parse.</param>
+        /// <returns>The index parsed from the string.</returns>
         public static Index<T> Parse(ReadOnlySpan<char> serialized) => IndexConverter<T>.Parse(serialized);
 
 #endregion
@@ -257,16 +269,30 @@ namespace GenericRange
 #endregion
         
 #region Operators
-
+        
+        /// <summary>Indicates whether the two values are equal.</summary>
+        /// <param name="left">The left argument.</param>
+        /// <param name="right">The right argument.</param>
+        /// <returns><see langword="true"/> if the two indices are equal; otherwise, <see langword="false"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(in Index<T> left, in Index<T> right) => left.Equals(right);
 
+        /// <summary>Indicates whether the two values are not equal.</summary>
+        /// <param name="left">The left argument.</param>
+        /// <param name="right">The right argument.</param>
+        /// <returns><see langword="true"/> if the two indices are not equal; otherwise, <see langword="false"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(in Index<T> left, in Index<T> right) => !left.Equals(right);
 
+        /// <summary>Boxes the value with a index.</summary>
+        /// <param name="value">The value of the index.</param>
+        /// <returns>The index with the value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Index<T>(in T value) => new(value);
 
+        /// <summary>Unboxes the value of the index, which is not from the end.</summary>
+        /// <param name="index">The index.</param>
+        /// <returns>The value of the index.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator T(in Index<T> index)
         {

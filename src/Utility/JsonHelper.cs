@@ -10,6 +10,7 @@ namespace GenericRange.Utility
     internal static class JsonHelper
     {
         private static readonly Lazy<Regex> s_rangeFormat = new (new Regex("^(\\^?.*)\\.{2}(\\^?.*)$", RegexOptions.Compiled));
+        
         private static readonly Lazy<JsonSerializerOptions> s_enumOptions = new(() => {
             JsonSerializerOptions option = new(DefaultOptions);
             option.Converters.Add(new JsonStringEnumConverter());

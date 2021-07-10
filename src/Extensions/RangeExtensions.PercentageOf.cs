@@ -5,11 +5,11 @@ namespace GenericRange.Extensions
 {
     public static partial class RangeExtensions
     {
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
         /// <param name="length">The length of the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -22,10 +22,10 @@ namespace GenericRange.Extensions
             return (value.GetOffset(length) - offset) / len;
         }
         
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -39,11 +39,11 @@ namespace GenericRange.Extensions
             return (value.Value - offset) / len;
         }
 
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
         /// <param name="length">The length of the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -56,10 +56,10 @@ namespace GenericRange.Extensions
             return (value.GetOffset(length) - offset) / len;
         }
         
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -73,11 +73,11 @@ namespace GenericRange.Extensions
             return (value.Value - offset) / len;
         }
 
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
         /// <param name="length">The length of the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -90,10 +90,10 @@ namespace GenericRange.Extensions
             return (value.GetOffset(length) - offset) / len;
         }
         
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -107,11 +107,11 @@ namespace GenericRange.Extensions
             return (value.Value - offset) / len;
         }
 
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
         /// <param name="length">The length of the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -124,10 +124,10 @@ namespace GenericRange.Extensions
             return (value.GetOffset(length) - offset) / (double)len;
         }
         
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -141,11 +141,11 @@ namespace GenericRange.Extensions
             return (value.Value - offset) / (double)len;
         }
 
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
         /// <param name="length">The length of the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.
@@ -158,10 +158,10 @@ namespace GenericRange.Extensions
             return (value.GetOffset(length) - offset) / (double)len;
         }
         
-        /// <summary>Returns the percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</summary>
+        /// <summary>Returns the percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</summary>
         /// <param name="range">The range.</param>
         /// <param name="value">The value inside the set.</param>
-        /// <returns>The percentage of the <see cref="value"/> within the <see cref="Range{T}"/>.</returns>
+        /// <returns>The percentage of the <paramref name="value"/> within the <see cref="Range{T}"/>.</returns>
         /// <remarks>
         ///     <c>0.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.Start"/>,<br/>
         ///     <c>1.0</c> if the <paramref name="value"/> is equal to <see cref="Range{T}.End"/>.

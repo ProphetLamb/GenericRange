@@ -3,22 +3,59 @@
 
 ## Contents
 
+- [DefaultConverterFactory\`1](#T-GenericRange-Utility-DefaultConverterFactory`1 'GenericRange.Utility.DefaultConverterFactory`1')
+  - [CanConvert()](#M-GenericRange-Utility-DefaultConverterFactory`1-CanConvert-System-Type- 'GenericRange.Utility.DefaultConverterFactory`1.CanConvert(System.Type)')
+  - [CreateConverter()](#M-GenericRange-Utility-DefaultConverterFactory`1-CreateConverter-System-Type,System-Text-Json-JsonSerializerOptions- 'GenericRange.Utility.DefaultConverterFactory`1.CreateConverter(System.Type,System.Text.Json.JsonSerializerOptions)')
+  - [Read(reader,typeToConvert,options,defaultConverter)](#M-GenericRange-Utility-DefaultConverterFactory`1-Read-System-Text-Json-Utf8JsonReader@,System-Type,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{`0}- 'GenericRange.Utility.DefaultConverterFactory`1.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions,System.Text.Json.Serialization.JsonConverter{`0})')
+  - [Write(writer,value,options,defaultConverter)](#M-GenericRange-Utility-DefaultConverterFactory`1-Write-System-Text-Json-Utf8JsonWriter,`0,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{`0}- 'GenericRange.Utility.DefaultConverterFactory`1.Write(System.Text.Json.Utf8JsonWriter,`0,System.Text.Json.JsonSerializerOptions,System.Text.Json.Serialization.JsonConverter{`0})')
+- [IndexConverter\`1](#T-GenericRange-TypeConverters-IndexConverter`1 'GenericRange.TypeConverters.IndexConverter`1')
+  - [CreateConverter()](#M-GenericRange-TypeConverters-IndexConverter`1-CreateConverter-System-Type,System-Text-Json-JsonSerializerOptions- 'GenericRange.TypeConverters.IndexConverter`1.CreateConverter(System.Type,System.Text.Json.JsonSerializerOptions)')
+  - [Parse(serialized)](#M-GenericRange-TypeConverters-IndexConverter`1-Parse-System-ReadOnlySpan{System-Char}@- 'GenericRange.TypeConverters.IndexConverter`1.Parse(System.ReadOnlySpan{System.Char}@)')
+  - [Parse(serialized,options)](#M-GenericRange-TypeConverters-IndexConverter`1-Parse-System-ReadOnlySpan{System-Char}@,System-Text-Json-JsonSerializerOptions- 'GenericRange.TypeConverters.IndexConverter`1.Parse(System.ReadOnlySpan{System.Char}@,System.Text.Json.JsonSerializerOptions)')
+  - [Read()](#M-GenericRange-TypeConverters-IndexConverter`1-Read-System-Text-Json-Utf8JsonReader@,System-Type,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Index{`0}}- 'GenericRange.TypeConverters.IndexConverter`1.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions,System.Text.Json.Serialization.JsonConverter{GenericRange.Index{`0}})')
+  - [ToString(index)](#M-GenericRange-TypeConverters-IndexConverter`1-ToString-GenericRange-Index{`0}@- 'GenericRange.TypeConverters.IndexConverter`1.ToString(GenericRange.Index{`0}@)')
+  - [ToString(index,options)](#M-GenericRange-TypeConverters-IndexConverter`1-ToString-GenericRange-Index{`0},System-Text-Json-JsonSerializerOptions- 'GenericRange.TypeConverters.IndexConverter`1.ToString(GenericRange.Index{`0},System.Text.Json.JsonSerializerOptions)')
+  - [Write()](#M-GenericRange-TypeConverters-IndexConverter`1-Write-System-Text-Json-Utf8JsonWriter,GenericRange-Index{`0},System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Index{`0}}- 'GenericRange.TypeConverters.IndexConverter`1.Write(System.Text.Json.Utf8JsonWriter,GenericRange.Index{`0},System.Text.Json.JsonSerializerOptions,System.Text.Json.Serialization.JsonConverter{GenericRange.Index{`0}})')
+- [IndexTypeConverter\`1](#T-GenericRange-TypeConverters-IndexTypeConverter`1 'GenericRange.TypeConverters.IndexTypeConverter`1')
+  - [CanConvertFrom()](#M-GenericRange-TypeConverters-IndexTypeConverter`1-CanConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Type- 'GenericRange.TypeConverters.IndexTypeConverter`1.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)')
+  - [CanConvertTo()](#M-GenericRange-TypeConverters-IndexTypeConverter`1-CanConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Type- 'GenericRange.TypeConverters.IndexTypeConverter`1.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)')
+  - [ConvertFrom()](#M-GenericRange-TypeConverters-IndexTypeConverter`1-ConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object- 'GenericRange.TypeConverters.IndexTypeConverter`1.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)')
+  - [ConvertTo()](#M-GenericRange-TypeConverters-IndexTypeConverter`1-ConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object,System-Type- 'GenericRange.TypeConverters.IndexTypeConverter`1.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)')
 - [Index\`1](#T-GenericRange-Index`1 'GenericRange.Index`1')
   - [#ctor(value,fromEnd)](#M-GenericRange-Index`1-#ctor-`0@,System-Boolean- 'GenericRange.Index`1.#ctor(`0@,System.Boolean)')
   - [#ctor(value)](#M-GenericRange-Index`1-#ctor-`0@- 'GenericRange.Index`1.#ctor(`0@)')
   - [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.IsFromEnd')
   - [Value](#P-GenericRange-Index`1-Value 'GenericRange.Index`1.Value')
+  - [CompareTo()](#M-GenericRange-Index`1-CompareTo-System-Object- 'GenericRange.Index`1.CompareTo(System.Object)')
+  - [CompareTo()](#M-GenericRange-Index`1-CompareTo-GenericRange-Index{`0}- 'GenericRange.Index`1.CompareTo(GenericRange.Index{`0})')
   - [CompareTo(other,length)](#M-GenericRange-Index`1-CompareTo-GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.CompareTo(GenericRange.Index{`0}@,`0@)')
   - [ConvertMarshaledValue\`\`1()](#M-GenericRange-Index`1-ConvertMarshaledValue``1-`0- 'GenericRange.Index`1.ConvertMarshaledValue``1(`0)')
   - [ConvertMarshaledValue\`\`1()](#M-GenericRange-Index`1-ConvertMarshaledValue``1-``0- 'GenericRange.Index`1.ConvertMarshaledValue``1(``0)')
+  - [Equals()](#M-GenericRange-Index`1-Equals-GenericRange-Index{`0}- 'GenericRange.Index`1.Equals(GenericRange.Index{`0})')
   - [Equals(other,length)](#M-GenericRange-Index`1-Equals-GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.Equals(GenericRange.Index{`0}@,`0@)')
+  - [Equals()](#M-GenericRange-Index`1-Equals-System-Object- 'GenericRange.Index`1.Equals(System.Object)')
+  - [GetHashCode()](#M-GenericRange-Index`1-GetHashCode 'GenericRange.Index`1.GetHashCode')
   - [GetOffset(length)](#M-GenericRange-Index`1-GetOffset-`0@- 'GenericRange.Index`1.GetOffset(`0@)')
   - [Max(left,right,length)](#M-GenericRange-Index`1-Max-GenericRange-Index{`0}@,GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.Max(GenericRange.Index{`0}@,GenericRange.Index{`0}@,`0@)')
   - [Max(left,right)](#M-GenericRange-Index`1-Max-GenericRange-Index{`0}@,GenericRange-Index{`0}@- 'GenericRange.Index`1.Max(GenericRange.Index{`0}@,GenericRange.Index{`0}@)')
   - [Min(left,right,length)](#M-GenericRange-Index`1-Min-GenericRange-Index{`0}@,GenericRange-Index{`0}@,`0@- 'GenericRange.Index`1.Min(GenericRange.Index{`0}@,GenericRange.Index{`0}@,`0@)')
   - [Min(left,right)](#M-GenericRange-Index`1-Min-GenericRange-Index{`0}@,GenericRange-Index{`0}@- 'GenericRange.Index`1.Min(GenericRange.Index{`0}@,GenericRange.Index{`0}@)')
+  - [Parse(serialized)](#M-GenericRange-Index`1-Parse-System-ReadOnlySpan{System-Char}- 'GenericRange.Index`1.Parse(System.ReadOnlySpan{System.Char})')
   - [ToIndex\`\`1()](#M-GenericRange-Index`1-ToIndex``1 'GenericRange.Index`1.ToIndex``1')
+  - [ToString()](#M-GenericRange-Index`1-ToString 'GenericRange.Index`1.ToString')
+  - [op_Equality(left,right)](#M-GenericRange-Index`1-op_Equality-GenericRange-Index{`0}@,GenericRange-Index{`0}@- 'GenericRange.Index`1.op_Equality(GenericRange.Index{`0}@,GenericRange.Index{`0}@)')
+  - [op_Explicit(index)](#M-GenericRange-Index`1-op_Explicit-GenericRange-Index{`0}@-~`0 'GenericRange.Index`1.op_Explicit(GenericRange.Index{`0}@)~`0')
   - [op_Explicit()](#M-GenericRange-Index`1-op_Explicit-System-Index@-~GenericRange-Index{`0} 'GenericRange.Index`1.op_Explicit(System.Index@)~GenericRange.Index{`0}')
+  - [op_Implicit(value)](#M-GenericRange-Index`1-op_Implicit-`0@-~GenericRange-Index{`0} 'GenericRange.Index`1.op_Implicit(`0@)~GenericRange.Index{`0}')
+  - [op_Inequality(left,right)](#M-GenericRange-Index`1-op_Inequality-GenericRange-Index{`0}@,GenericRange-Index{`0}@- 'GenericRange.Index`1.op_Inequality(GenericRange.Index{`0}@,GenericRange.Index{`0}@)')
+- [RangeConverter\`1](#T-GenericRange-TypeConverters-RangeConverter`1 'GenericRange.TypeConverters.RangeConverter`1')
+  - [CreateConverter()](#M-GenericRange-TypeConverters-RangeConverter`1-CreateConverter-System-Type,System-Text-Json-JsonSerializerOptions- 'GenericRange.TypeConverters.RangeConverter`1.CreateConverter(System.Type,System.Text.Json.JsonSerializerOptions)')
+  - [Parse(serialized)](#M-GenericRange-TypeConverters-RangeConverter`1-Parse-System-String- 'GenericRange.TypeConverters.RangeConverter`1.Parse(System.String)')
+  - [Parse(serialized,options)](#M-GenericRange-TypeConverters-RangeConverter`1-Parse-System-String,System-Text-Json-JsonSerializerOptions- 'GenericRange.TypeConverters.RangeConverter`1.Parse(System.String,System.Text.Json.JsonSerializerOptions)')
+  - [Read()](#M-GenericRange-TypeConverters-RangeConverter`1-Read-System-Text-Json-Utf8JsonReader@,System-Type,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Range{`0}}- 'GenericRange.TypeConverters.RangeConverter`1.Read(System.Text.Json.Utf8JsonReader@,System.Type,System.Text.Json.JsonSerializerOptions,System.Text.Json.Serialization.JsonConverter{GenericRange.Range{`0}})')
+  - [ToString(range)](#M-GenericRange-TypeConverters-RangeConverter`1-ToString-GenericRange-Range{`0}@- 'GenericRange.TypeConverters.RangeConverter`1.ToString(GenericRange.Range{`0}@)')
+  - [ToString(range,options)](#M-GenericRange-TypeConverters-RangeConverter`1-ToString-GenericRange-Range{`0}@,System-Text-Json-JsonSerializerOptions- 'GenericRange.TypeConverters.RangeConverter`1.ToString(GenericRange.Range{`0}@,System.Text.Json.JsonSerializerOptions)')
+  - [Write()](#M-GenericRange-TypeConverters-RangeConverter`1-Write-System-Text-Json-Utf8JsonWriter,GenericRange-Range{`0},System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Range{`0}}- 'GenericRange.TypeConverters.RangeConverter`1.Write(System.Text.Json.Utf8JsonWriter,GenericRange.Range{`0},System.Text.Json.JsonSerializerOptions,System.Text.Json.Serialization.JsonConverter{GenericRange.Range{`0}})')
 - [RangeExtensions](#T-GenericRange-Extensions-RangeExtensions 'GenericRange.Extensions.RangeExtensions')
   - [Enumerate(range,length)](#M-GenericRange-Extensions-RangeExtensions-Enumerate-GenericRange-Range{System-Int64},System-Int64- 'GenericRange.Extensions.RangeExtensions.Enumerate(GenericRange.Range{System.Int64},System.Int64)')
   - [Enumerate(range,length)](#M-GenericRange-Extensions-RangeExtensions-Enumerate-GenericRange-Range{System-Int64}- 'GenericRange.Extensions.RangeExtensions.Enumerate(GenericRange.Range{System.Int64})')
@@ -62,6 +99,11 @@
   - [PercentageOf(range,value)](#M-GenericRange-Extensions-RangeExtensions-PercentageOf-GenericRange-Range{System-Int32},GenericRange-Index{System-Int32}@- 'GenericRange.Extensions.RangeExtensions.PercentageOf(GenericRange.Range{System.Int32},GenericRange.Index{System.Int32}@)')
   - [ToIndex\`\`1(index)](#M-GenericRange-Extensions-RangeExtensions-ToIndex``1-GenericRange-Index{``0}- 'GenericRange.Extensions.RangeExtensions.ToIndex``1(GenericRange.Index{``0})')
   - [ToRange\`\`1(range)](#M-GenericRange-Extensions-RangeExtensions-ToRange``1-GenericRange-Range{``0}- 'GenericRange.Extensions.RangeExtensions.ToRange``1(GenericRange.Range{``0})')
+- [RangeTypeConverter\`1](#T-GenericRange-TypeConverters-RangeTypeConverter`1 'GenericRange.TypeConverters.RangeTypeConverter`1')
+  - [CanConvertFrom()](#M-GenericRange-TypeConverters-RangeTypeConverter`1-CanConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Type- 'GenericRange.TypeConverters.RangeTypeConverter`1.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)')
+  - [CanConvertTo()](#M-GenericRange-TypeConverters-RangeTypeConverter`1-CanConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Type- 'GenericRange.TypeConverters.RangeTypeConverter`1.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)')
+  - [ConvertFrom()](#M-GenericRange-TypeConverters-RangeTypeConverter`1-ConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object- 'GenericRange.TypeConverters.RangeTypeConverter`1.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)')
+  - [ConvertTo()](#M-GenericRange-TypeConverters-RangeTypeConverter`1-ConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object,System-Type- 'GenericRange.TypeConverters.RangeTypeConverter`1.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)')
 - [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1')
   - [#ctor(start,end)](#M-GenericRange-Range`1-#ctor-GenericRange-Index{`0}@,GenericRange-Index{`0}@- 'GenericRange.Range`1.#ctor(GenericRange.Index{`0}@,GenericRange.Index{`0}@)')
   - [#ctor(start,startFromEnd,end,endFromEnd)](#M-GenericRange-Range`1-#ctor-`0@,System-Boolean,`0@,System-Boolean- 'GenericRange.Range`1.#ctor(`0@,System.Boolean,`0@,System.Boolean)')
@@ -76,24 +118,284 @@
   - [Encompasses(other,length)](#M-GenericRange-Range`1-Encompasses-GenericRange-Range{`0}@,`0@- 'GenericRange.Range`1.Encompasses(GenericRange.Range{`0}@,`0@)')
   - [Encompasses(other)](#M-GenericRange-Range`1-Encompasses-GenericRange-Range{`0}@- 'GenericRange.Range`1.Encompasses(GenericRange.Range{`0}@)')
   - [Equals(other,length)](#M-GenericRange-Range`1-Equals-GenericRange-Range{`0}@,`0@- 'GenericRange.Range`1.Equals(GenericRange.Range{`0}@,`0@)')
+  - [Equals()](#M-GenericRange-Range`1-Equals-GenericRange-Range{`0}- 'GenericRange.Range`1.Equals(GenericRange.Range{`0})')
+  - [Equals()](#M-GenericRange-Range`1-Equals-System-Object- 'GenericRange.Range`1.Equals(System.Object)')
+  - [GetHashCode()](#M-GenericRange-Range`1-GetHashCode 'GenericRange.Range`1.GetHashCode')
   - [GetLeftPart(endIndex)](#M-GenericRange-Range`1-GetLeftPart-GenericRange-Index{`0}@- 'GenericRange.Range`1.GetLeftPart(GenericRange.Index{`0}@)')
   - [GetOffsetAndLength(length)](#M-GenericRange-Range`1-GetOffsetAndLength-`0@- 'GenericRange.Range`1.GetOffsetAndLength(`0@)')
   - [GetOffsetAndLength()](#M-GenericRange-Range`1-GetOffsetAndLength 'GenericRange.Range`1.GetOffsetAndLength')
   - [GetRightPart(startIndex)](#M-GenericRange-Range`1-GetRightPart-GenericRange-Index{`0}@- 'GenericRange.Range`1.GetRightPart(GenericRange.Index{`0}@)')
   - [Intersects(other,length)](#M-GenericRange-Range`1-Intersects-GenericRange-Range{`0}@,`0@- 'GenericRange.Range`1.Intersects(GenericRange.Range{`0}@,`0@)')
   - [Intersects(other)](#M-GenericRange-Range`1-Intersects-GenericRange-Range{`0}@- 'GenericRange.Range`1.Intersects(GenericRange.Range{`0}@)')
+  - [Parse(serialized)](#M-GenericRange-Range`1-Parse-System-String- 'GenericRange.Range`1.Parse(System.String)')
   - [Span(other,length)](#M-GenericRange-Range`1-Span-GenericRange-Range{`0}@,`0@- 'GenericRange.Range`1.Span(GenericRange.Range{`0}@,`0@)')
   - [Span(other)](#M-GenericRange-Range`1-Span-GenericRange-Range{`0}@- 'GenericRange.Range`1.Span(GenericRange.Range{`0}@)')
   - [ToRange\`\`1()](#M-GenericRange-Range`1-ToRange``1 'GenericRange.Range`1.ToRange``1')
+  - [ToString()](#M-GenericRange-Range`1-ToString 'GenericRange.Range`1.ToString')
   - [Union(other,length)](#M-GenericRange-Range`1-Union-GenericRange-Range{`0}@,`0@- 'GenericRange.Range`1.Union(GenericRange.Range{`0}@,`0@)')
   - [Union(other)](#M-GenericRange-Range`1-Union-GenericRange-Range{`0}@- 'GenericRange.Range`1.Union(GenericRange.Range{`0}@)')
+  - [op_Equality(left,right)](#M-GenericRange-Range`1-op_Equality-GenericRange-Range{`0}@,GenericRange-Range{`0}@- 'GenericRange.Range`1.op_Equality(GenericRange.Range{`0}@,GenericRange.Range{`0}@)')
   - [op_Explicit()](#M-GenericRange-Range`1-op_Explicit-System-Range@-~GenericRange-Range{`0} 'GenericRange.Range`1.op_Explicit(System.Range@)~GenericRange.Range{`0}')
+  - [op_Implicit(tuple)](#M-GenericRange-Range`1-op_Implicit-System-ValueTuple{`0,`0}@-~GenericRange-Range{`0} 'GenericRange.Range`1.op_Implicit(System.ValueTuple{`0,`0}@)~GenericRange.Range{`0}')
+  - [op_Inequality(left,right)](#M-GenericRange-Range`1-op_Inequality-GenericRange-Range{`0}@,GenericRange-Range{`0}@- 'GenericRange.Range`1.op_Inequality(GenericRange.Range{`0}@,GenericRange.Range{`0}@)')
 - [ValueStringBuilder](#T-GenericRange-Utility-ValueStringBuilder 'GenericRange.Utility.ValueStringBuilder')
   - [RawChars](#P-GenericRange-Utility-ValueStringBuilder-RawChars 'GenericRange.Utility.ValueStringBuilder.RawChars')
   - [AsSpan(terminate)](#M-GenericRange-Utility-ValueStringBuilder-AsSpan-System-Boolean- 'GenericRange.Utility.ValueStringBuilder.AsSpan(System.Boolean)')
   - [GetPinnableReference()](#M-GenericRange-Utility-ValueStringBuilder-GetPinnableReference 'GenericRange.Utility.ValueStringBuilder.GetPinnableReference')
   - [GetPinnableReference(terminate)](#M-GenericRange-Utility-ValueStringBuilder-GetPinnableReference-System-Boolean- 'GenericRange.Utility.ValueStringBuilder.GetPinnableReference(System.Boolean)')
   - [Grow(additionalCapacityBeyondPos)](#M-GenericRange-Utility-ValueStringBuilder-Grow-System-Int32- 'GenericRange.Utility.ValueStringBuilder.Grow(System.Int32)')
+
+<a name='T-GenericRange-Utility-DefaultConverterFactory`1'></a>
+## DefaultConverterFactory\`1 `type`
+
+##### Namespace
+
+GenericRange.Utility
+
+##### Summary
+
+Boilderplate for a [JsonConverterFactory](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.Serialization.JsonConverterFactory 'System.Text.Json.Serialization.JsonConverterFactory').
+
+##### Generic Types
+
+| Name | Description |
+| ---- | ----------- |
+| T | The type to convert. |
+
+<a name='M-GenericRange-Utility-DefaultConverterFactory`1-CanConvert-System-Type-'></a>
+### CanConvert() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Utility-DefaultConverterFactory`1-CreateConverter-System-Type,System-Text-Json-JsonSerializerOptions-'></a>
+### CreateConverter() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Utility-DefaultConverterFactory`1-Read-System-Text-Json-Utf8JsonReader@,System-Type,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{`0}-'></a>
+### Read(reader,typeToConvert,options,defaultConverter) `method`
+
+##### Summary
+
+Reads the value from the stream.
+
+##### Returns
+
+
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| reader | [System.Text.Json.Utf8JsonReader@](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.Utf8JsonReader@ 'System.Text.Json.Utf8JsonReader@') | The stream to read from. |
+| typeToConvert | [System.Type](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Type 'System.Type') | The type to convert. |
+| options | [System.Text.Json.JsonSerializerOptions](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.JsonSerializerOptions 'System.Text.Json.JsonSerializerOptions') | The options to use for serialization. |
+| defaultConverter | [System.Text.Json.Serialization.JsonConverter{\`0}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.Serialization.JsonConverter 'System.Text.Json.Serialization.JsonConverter{`0}') | The converter providing the conversion. |
+
+<a name='M-GenericRange-Utility-DefaultConverterFactory`1-Write-System-Text-Json-Utf8JsonWriter,`0,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{`0}-'></a>
+### Write(writer,value,options,defaultConverter) `method`
+
+##### Summary
+
+Writes the value to the steam.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| writer | [System.Text.Json.Utf8JsonWriter](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.Utf8JsonWriter 'System.Text.Json.Utf8JsonWriter') | The stream to write to. |
+| value | [\`0](#T-`0 '`0') | The value to write. |
+| options | [System.Text.Json.JsonSerializerOptions](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.JsonSerializerOptions 'System.Text.Json.JsonSerializerOptions') | The options to use for serialization. |
+| defaultConverter | [System.Text.Json.Serialization.JsonConverter{\`0}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.Serialization.JsonConverter 'System.Text.Json.Serialization.JsonConverter{`0}') | The converter providing the conversion. |
+
+<a name='T-GenericRange-TypeConverters-IndexConverter`1'></a>
+## IndexConverter\`1 `type`
+
+##### Namespace
+
+GenericRange.TypeConverters
+
+##### Summary
+
+*Inherit from parent.*
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-CreateConverter-System-Type,System-Text-Json-JsonSerializerOptions-'></a>
+### CreateConverter() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-Parse-System-ReadOnlySpan{System-Char}@-'></a>
+### Parse(serialized) `method`
+
+##### Summary
+
+Parses the index from a string.
+
+##### Returns
+
+The index represented by the string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serialized | [System.ReadOnlySpan{System.Char}@](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ReadOnlySpan 'System.ReadOnlySpan{System.Char}@') | The string to parse. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentException 'System.ArgumentException') | The `serialized` string is empty. |
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-Parse-System-ReadOnlySpan{System-Char}@,System-Text-Json-JsonSerializerOptions-'></a>
+### Parse(serialized,options) `method`
+
+##### Summary
+
+Parses the index from a string with the specified serialization options.
+
+##### Returns
+
+The index represented by the string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serialized | [System.ReadOnlySpan{System.Char}@](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ReadOnlySpan 'System.ReadOnlySpan{System.Char}@') | The string to parse. |
+| options | [System.Text.Json.JsonSerializerOptions](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.JsonSerializerOptions 'System.Text.Json.JsonSerializerOptions') | The serialization options. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentException 'System.ArgumentException') | The `serialized` string is empty. |
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-Read-System-Text-Json-Utf8JsonReader@,System-Type,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Index{`0}}-'></a>
+### Read() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-ToString-GenericRange-Index{`0}@-'></a>
+### ToString(index) `method`
+
+##### Summary
+
+Serializes the index to a string.
+
+##### Returns
+
+The string representation of the index.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| index | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | The index to serialize. |
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-ToString-GenericRange-Index{`0},System-Text-Json-JsonSerializerOptions-'></a>
+### ToString(index,options) `method`
+
+##### Summary
+
+Serializes the index to a string with the specified serialization options.
+
+##### Returns
+
+The string representation of the index.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| index | [GenericRange.Index{\`0}](#T-GenericRange-Index{`0} 'GenericRange.Index{`0}') | The index to serialize. |
+| options | [System.Text.Json.JsonSerializerOptions](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.JsonSerializerOptions 'System.Text.Json.JsonSerializerOptions') | The serialization options. |
+
+<a name='M-GenericRange-TypeConverters-IndexConverter`1-Write-System-Text-Json-Utf8JsonWriter,GenericRange-Index{`0},System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Index{`0}}-'></a>
+### Write() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='T-GenericRange-TypeConverters-IndexTypeConverter`1'></a>
+## IndexTypeConverter\`1 `type`
+
+##### Namespace
+
+GenericRange.TypeConverters
+
+<a name='M-GenericRange-TypeConverters-IndexTypeConverter`1-CanConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Type-'></a>
+### CanConvertFrom() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-IndexTypeConverter`1-CanConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Type-'></a>
+### CanConvertTo() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-IndexTypeConverter`1-ConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object-'></a>
+### ConvertFrom() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-IndexTypeConverter`1-ConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object,System-Type-'></a>
+### ConvertTo() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='T-GenericRange-Index`1'></a>
 ## Index\`1 `type`
@@ -159,6 +461,28 @@ Indicates whether the index is from the start or the end.
 
 Returns the index value.
 
+<a name='M-GenericRange-Index`1-CompareTo-System-Object-'></a>
+### CompareTo() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Index`1-CompareTo-GenericRange-Index{`0}-'></a>
+### CompareTo() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-GenericRange-Index`1-CompareTo-GenericRange-Index{`0}@,`0@-'></a>
 ### CompareTo(other,length) `method`
 
@@ -201,6 +525,17 @@ Ensure that T is TIn or IConvertible.
 
 This method has no parameters.
 
+<a name='M-GenericRange-Index`1-Equals-GenericRange-Index{`0}-'></a>
+### Equals() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-GenericRange-Index`1-Equals-GenericRange-Index{`0}@,`0@-'></a>
 ### Equals(other,length) `method`
 
@@ -218,6 +553,28 @@ Indicates whether the [Index\`1](#T-GenericRange-Index`1 'GenericRange.Index`1')
 | ---- | ---- | ----------- |
 | other | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | An object to compare with this object. |
 | length | [\`0@](#T-`0@ '`0@') | The length of the collection. |
+
+<a name='M-GenericRange-Index`1-Equals-System-Object-'></a>
+### Equals() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Index`1-GetHashCode'></a>
+### GetHashCode() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='M-GenericRange-Index`1-GetOffset-`0@-'></a>
 ### GetOffset(length) `method`
@@ -318,6 +675,23 @@ The smaller [Index\`1](#T-GenericRange-Index`1 'GenericRange.Index`1').
 
 Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.IsFromEnd') in favour of performance.
 
+<a name='M-GenericRange-Index`1-Parse-System-ReadOnlySpan{System-Char}-'></a>
+### Parse(serialized) `method`
+
+##### Summary
+
+Parses the string to a index.
+
+##### Returns
+
+The index parsed from the string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serialized | [System.ReadOnlySpan{System.Char}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ReadOnlySpan 'System.ReadOnlySpan{System.Char}') | The string to parse. |
+
 <a name='M-GenericRange-Index`1-ToIndex``1'></a>
 ### ToIndex\`\`1() `method`
 
@@ -349,12 +723,219 @@ This method has no parameters.
 
 Uses [ChangeType](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Convert.ChangeType 'System.Convert.ChangeType(System.Object,System.Type)'), but the generic constraints do not ensure that the Types are IConvertible use at own discretion.
 
+<a name='M-GenericRange-Index`1-ToString'></a>
+### ToString() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Index`1-op_Equality-GenericRange-Index{`0}@,GenericRange-Index{`0}@-'></a>
+### op_Equality(left,right) `method`
+
+##### Summary
+
+Indicates whether the two values are equal.
+
+##### Returns
+
+`true` if the two indices are equal; otherwise, `false`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| left | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | The left argument. |
+| right | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | The right argument. |
+
+<a name='M-GenericRange-Index`1-op_Explicit-GenericRange-Index{`0}@-~`0'></a>
+### op_Explicit(index) `method`
+
+##### Summary
+
+Unboxes the value of the index, which is not from the end.
+
+##### Returns
+
+The value of the index.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| index | [GenericRange.Index{\`0}@)~\`0](#T-GenericRange-Index{`0}@-~`0 'GenericRange.Index{`0}@)~`0') | The index. |
+
 <a name='M-GenericRange-Index`1-op_Explicit-System-Index@-~GenericRange-Index{`0}'></a>
 ### op_Explicit() `method`
 
 ##### Summary
 
 Uses [ChangeType](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Convert.ChangeType 'System.Convert.ChangeType(System.Object,System.Type)') to convert the index to the specific generic type.
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Index`1-op_Implicit-`0@-~GenericRange-Index{`0}'></a>
+### op_Implicit(value) `method`
+
+##### Summary
+
+Boxes the value with a index.
+
+##### Returns
+
+The index with the value.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| value | [\`0@)~GenericRange.Index{\`0}](#T-`0@-~GenericRange-Index{`0} '`0@)~GenericRange.Index{`0}') | The value of the index. |
+
+<a name='M-GenericRange-Index`1-op_Inequality-GenericRange-Index{`0}@,GenericRange-Index{`0}@-'></a>
+### op_Inequality(left,right) `method`
+
+##### Summary
+
+Indicates whether the two values are not equal.
+
+##### Returns
+
+`true` if the two indices are not equal; otherwise, `false`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| left | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | The left argument. |
+| right | [GenericRange.Index{\`0}@](#T-GenericRange-Index{`0}@ 'GenericRange.Index{`0}@') | The right argument. |
+
+<a name='T-GenericRange-TypeConverters-RangeConverter`1'></a>
+## RangeConverter\`1 `type`
+
+##### Namespace
+
+GenericRange.TypeConverters
+
+##### Summary
+
+*Inherit from parent.*
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-CreateConverter-System-Type,System-Text-Json-JsonSerializerOptions-'></a>
+### CreateConverter() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-Parse-System-String-'></a>
+### Parse(serialized) `method`
+
+##### Summary
+
+Parses the range from a string.
+
+##### Returns
+
+The range represented by the string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serialized | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The string to parse. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentException 'System.ArgumentException') | The `serialized` string is empty. |
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-Parse-System-String,System-Text-Json-JsonSerializerOptions-'></a>
+### Parse(serialized,options) `method`
+
+##### Summary
+
+Parses the range from a string with the specified serialization options.
+
+##### Returns
+
+The range represented by the string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serialized | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The string to parse. |
+| options | [System.Text.Json.JsonSerializerOptions](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.JsonSerializerOptions 'System.Text.Json.JsonSerializerOptions') | The serialization options. |
+
+##### Exceptions
+
+| Name | Description |
+| ---- | ----------- |
+| [System.ArgumentException](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ArgumentException 'System.ArgumentException') | The `serialized` string is empty. |
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-Read-System-Text-Json-Utf8JsonReader@,System-Type,System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Range{`0}}-'></a>
+### Read() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-ToString-GenericRange-Range{`0}@-'></a>
+### ToString(range) `method`
+
+##### Summary
+
+Serializes the range to a string.
+
+##### Returns
+
+The string representation of the range.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| range | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The range to serialize. |
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-ToString-GenericRange-Range{`0}@,System-Text-Json-JsonSerializerOptions-'></a>
+### ToString(range,options) `method`
+
+##### Summary
+
+Serializes the range to a string with the specified serialization options.
+
+##### Returns
+
+The string representation of the range.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| range | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The range to serialize. |
+| options | [System.Text.Json.JsonSerializerOptions](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Text.Json.JsonSerializerOptions 'System.Text.Json.JsonSerializerOptions') | The serialization options. |
+
+<a name='M-GenericRange-TypeConverters-RangeConverter`1-Write-System-Text-Json-Utf8JsonWriter,GenericRange-Range{`0},System-Text-Json-JsonSerializerOptions,System-Text-Json-Serialization-JsonConverter{GenericRange-Range{`0}}-'></a>
+### Write() `method`
+
+##### Summary
+
+*Inherit from parent.*
 
 ##### Parameters
 
@@ -639,7 +1220,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -660,7 +1241,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -683,7 +1264,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -704,7 +1285,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -727,7 +1308,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -748,7 +1329,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -771,7 +1352,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -792,7 +1373,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -815,7 +1396,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -837,7 +1418,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -861,7 +1442,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -882,7 +1463,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -905,7 +1486,7 @@ Disallows [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.Is
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -927,7 +1508,7 @@ The `value` mapped to the `target` range.
 
 ##### Summary
 
-Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the [](#!-target 'target') range.
+Interpolates the value from the `source`[Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') to the `target` range.
 
 ##### Returns
 
@@ -1004,11 +1585,11 @@ The signed 64-bit integer representing the created mask.
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1027,11 +1608,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1049,11 +1630,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1072,11 +1653,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1094,11 +1675,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1117,11 +1698,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1139,11 +1720,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1162,11 +1743,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1184,11 +1765,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1207,11 +1788,11 @@ The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange
 
 ##### Summary
 
-Returns the percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+Returns the percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Returns
 
-The percentage of the [](#!-value 'value') within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
+The percentage of the `value` within the [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1').
 
 ##### Parameters
 
@@ -1257,6 +1838,57 @@ The [Range](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | range | [GenericRange.Range{\`\`0}](#T-GenericRange-Range{``0} 'GenericRange.Range{``0}') | The IConvertible range. |
+
+<a name='T-GenericRange-TypeConverters-RangeTypeConverter`1'></a>
+## RangeTypeConverter\`1 `type`
+
+##### Namespace
+
+GenericRange.TypeConverters
+
+<a name='M-GenericRange-TypeConverters-RangeTypeConverter`1-CanConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Type-'></a>
+### CanConvertFrom() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-RangeTypeConverter`1-CanConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Type-'></a>
+### CanConvertTo() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-RangeTypeConverter`1-ConvertFrom-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object-'></a>
+### ConvertFrom() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-TypeConverters-RangeTypeConverter`1-ConvertTo-System-ComponentModel-ITypeDescriptorContext,System-Globalization-CultureInfo,System-Object,System-Type-'></a>
+### ConvertTo() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
 
 <a name='T-GenericRange-Range`1'></a>
 ## Range\`1 `type`
@@ -1498,6 +2130,39 @@ Indicates whether the indices inside a set of a specific `length` of the [Range\
 | other | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The other [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1'). |
 | length | [\`0@](#T-`0@ '`0@') | The length of the set. |
 
+<a name='M-GenericRange-Range`1-Equals-GenericRange-Range{`0}-'></a>
+### Equals() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Range`1-Equals-System-Object-'></a>
+### Equals() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
+<a name='M-GenericRange-Range`1-GetHashCode'></a>
+### GetHashCode() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-GenericRange-Range`1-GetLeftPart-GenericRange-Index{`0}@-'></a>
 ### GetLeftPart(endIndex) `method`
 
@@ -1599,6 +2264,23 @@ Indicates whether a [Range\`1](#T-GenericRange-Range`1 'GenericRange.Range`1') i
 
 Disallows indices [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.IsFromEnd') in favour of performance.
 
+<a name='M-GenericRange-Range`1-Parse-System-String-'></a>
+### Parse(serialized) `method`
+
+##### Summary
+
+Parses the string to a range.
+
+##### Returns
+
+The range parsed from the string.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| serialized | [System.String](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.String 'System.String') | The string to parse. |
+
 <a name='M-GenericRange-Range`1-Span-GenericRange-Range{`0}@,`0@-'></a>
 ### Span(other,length) `method`
 
@@ -1669,6 +2351,17 @@ This method has no parameters.
 
 Uses [ChangeType](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Convert.ChangeType 'System.Convert.ChangeType(System.Object,System.Type)'), but the generic constraints do not ensure that the Types are IConvertible use at own discretion.
 
+<a name='M-GenericRange-Range`1-ToString'></a>
+### ToString() `method`
+
+##### Summary
+
+*Inherit from parent.*
+
+##### Parameters
+
+This method has no parameters.
+
 <a name='M-GenericRange-Range`1-Union-GenericRange-Range{`0}@,`0@-'></a>
 ### Union(other,length) `method`
 
@@ -1726,6 +2419,24 @@ Same as [Span\`1](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l
     
     Disallows indices [IsFromEnd](#P-GenericRange-Index`1-IsFromEnd 'GenericRange.Index`1.IsFromEnd') in favour of performance.
 
+<a name='M-GenericRange-Range`1-op_Equality-GenericRange-Range{`0}@,GenericRange-Range{`0}@-'></a>
+### op_Equality(left,right) `method`
+
+##### Summary
+
+Indicates whether the two values are equal.
+
+##### Returns
+
+`true` if the two indices are equal; otherwise, `false`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| left | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The left argument. |
+| right | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The right argument. |
+
 <a name='M-GenericRange-Range`1-op_Explicit-System-Range@-~GenericRange-Range{`0}'></a>
 ### op_Explicit() `method`
 
@@ -1740,6 +2451,41 @@ This method has no parameters.
 ##### Remarks
 
 Warning: does not work for not [IConvertible](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.IConvertible 'System.IConvertible')'s such as [Enum](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.Enum 'System.Enum') types.
+
+<a name='M-GenericRange-Range`1-op_Implicit-System-ValueTuple{`0,`0}@-~GenericRange-Range{`0}'></a>
+### op_Implicit(tuple) `method`
+
+##### Summary
+
+Deconstructs the tuple to a range.
+
+##### Returns
+
+The range represented by the tuple.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| tuple | [System.ValueTuple{\`0,\`0}@)~GenericRange.Range{\`0}](http://msdn.microsoft.com/query/dev14.query?appId=Dev14IDEF1&l=EN-US&k=k:System.ValueTuple 'System.ValueTuple{`0,`0}@)~GenericRange.Range{`0}') | The tuple to deconstruct. |
+
+<a name='M-GenericRange-Range`1-op_Inequality-GenericRange-Range{`0}@,GenericRange-Range{`0}@-'></a>
+### op_Inequality(left,right) `method`
+
+##### Summary
+
+Indicates whether the two values are not equal.
+
+##### Returns
+
+`true` if the two indices are not equal; otherwise, `false`.
+
+##### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| left | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The left argument. |
+| right | [GenericRange.Range{\`0}@](#T-GenericRange-Range{`0}@ 'GenericRange.Range{`0}@') | The right argument. |
 
 <a name='T-GenericRange-Utility-ValueStringBuilder'></a>
 ## ValueStringBuilder `type`

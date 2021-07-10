@@ -7,7 +7,7 @@ namespace GenericRange.Extensions
     public static partial class RangeExtensions
     {
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -23,7 +23,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
@@ -38,7 +38,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -54,7 +54,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
@@ -69,7 +69,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -85,7 +85,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
@@ -100,7 +100,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -116,7 +116,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
@@ -131,7 +131,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -148,7 +148,7 @@ namespace GenericRange.Extensions
         }
 
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
@@ -164,7 +164,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -180,7 +180,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>
@@ -195,7 +195,7 @@ namespace GenericRange.Extensions
         }
         
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="sourceLength">The length of the source set.</param>
@@ -212,7 +212,7 @@ namespace GenericRange.Extensions
         }
 
         /// <summary>
-        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <see cref="target"/> range.
+        /// Interpolates the value from the <paramref name="source"/> <see cref="Range{T}"/> to the <paramref name="target"/> range.
         /// </summary>
         /// <param name="source">The range within the <paramref name="value"/> exists.</param>
         /// <param name="target">The range to map the <paramref name="value"/> to.</param>

@@ -3,10 +3,8 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
-using System.Text.Json;
 
 using GenericRange.TypeConverters;
-using GenericRange.Utility;
 
 namespace GenericRange
 {
@@ -274,6 +272,7 @@ namespace GenericRange
         /// <param name="startIndex">The end-index.</param>
         public Range<T> GetRightPart(in Index<T> startIndex) => new(startIndex, End);
 
+        /// <inheritdoc/>
         public override string ToString() => RangeConverter<T>.ToString(this);
 
         /// <summary>Indicates whether the indices inside a set of a specific <paramref name="length"/> of the <see cref="Range{T}"/> are equal to another.</summary>
@@ -284,14 +283,17 @@ namespace GenericRange
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(in Range<T> other, in T length) => Start.Equals(other.Start, length) && End.Equals(other.End, length);
         
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Equals(Range<T> other) => Start.Equals(other.Start) && End.Equals(other.End);
 
+        /// <inheritdoc/>
         [Pure]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals([NotNullWhen(true)] object? obj) => obj is Range<T> other && Equals(other);
 
+        /// <inheritdoc/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode() => HashCode.Combine(Start, End);
         
@@ -306,6 +308,9 @@ namespace GenericRange
             return new(Start.ToIndex<TOut>(), End.ToIndex<TOut>());
         }
         
+        /// <summary>Parses the string to a range.</summary>
+        /// <param name="serialized">The string to parse.</param>
+        /// <returns>The range parsed from the string.</returns>
         public static Range<T> Parse(string serialized) => RangeConverter<T>.Parse(serialized);
 
 #endregion
@@ -324,12 +329,23 @@ namespace GenericRange
         
 #region Operators
 
+        /// <summary>Indicates whether the two values are equal.</summary>
+        /// <param name="left">The left argument.</param>
+        /// <param name="right">The right argument.</param>
+        /// <returns><see langword="true"/> if the two indices are equal; otherwise, <see langword="false"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator ==(in Range<T> left, in Range<T> right) => left.Equals(right);
 
+        /// <summary>Indicates whether the two values are not equal.</summary>
+        /// <param name="left">The left argument.</param>
+        /// <param name="right">The right argument.</param>
+        /// <returns><see langword="true"/> if the two indices are not equal; otherwise, <see langword="false"/>.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(in Range<T> left, in Range<T> right) => !left.Equals(right);
-
+        
+        /// <summary>Deconstructs the tuple to a range.</summary>
+        /// <param name="tuple">The tuple to deconstruct.</param>
+        /// <returns>The range represented by the tuple.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Range<T>(in (T Start, T End) tuple) => new(tuple.Start, tuple.End);
 
